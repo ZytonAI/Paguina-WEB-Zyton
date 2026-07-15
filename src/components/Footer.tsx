@@ -9,6 +9,24 @@ export default function Footer() {
           ZYTON <span className="text-accent">AI</span>
         </span>
         <span>Agencia de automatización con IA para negocios en Colombia.</span>
+        <nav className="flex gap-4" aria-label="Redes sociales">
+          <a
+            href="https://www.linkedin.com/company/zyton-ai/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-foreground"
+          >
+            LinkedIn
+          </a>
+          <a
+            href="https://www.instagram.com/zytonai/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-foreground"
+          >
+            Instagram
+          </a>
+        </nav>
         <span>© {new Date().getFullYear()} ZytonAI. Todos los derechos reservados.</span>
       </div>
     </footer>
