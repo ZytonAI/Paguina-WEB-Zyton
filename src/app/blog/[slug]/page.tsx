@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import PostCover from "@/components/PostCover";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
 
-const siteUrl = "https://zytonai.com";
+const siteUrl = "https://www.zytonai.com";
 
 export function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));

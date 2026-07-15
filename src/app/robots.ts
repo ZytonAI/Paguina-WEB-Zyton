@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://zytonai.com/sitemap.xml",
+    sitemap: "https://www.zytonai.com/sitemap.xml",
   };
 }

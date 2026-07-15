@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/posts";
 
-const siteUrl = "https://zytonai.com";
+const siteUrl = "https://www.zytonai.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

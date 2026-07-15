@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl = "https://zytonai.com";
+const siteUrl = "https://www.zytonai.com";
 const title = "ZytonAI | Automatización con IA para negocios en Colombia";
 const description =
   "Agencia de automatización con inteligencia artificial en Colombia. Ayudamos a negocios a dar seguimiento automático a cada lead, sin cambiar cómo ya trabajas.";
