@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { InstagramIcon, LinkedinIcon } from "./SocialIcons";
+import CrmLoginButton from "./CrmLoginButton";
 
 const links = [
   { href: "/#servicios", label: "Servicios" },
@@ -52,6 +53,7 @@ export default function Header() {
               <LinkedinIcon className="h-5 w-5" />
             </a>
           </nav>
+          <CrmLoginButton className="hidden rounded-full border border-border px-5 py-2 text-sm font-medium text-foreground transition-colors hover:border-accent hover:text-accent sm:block" />
           <Link
             href="/#contacto"
             className="rounded-full bg-accent px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-accent/90"
