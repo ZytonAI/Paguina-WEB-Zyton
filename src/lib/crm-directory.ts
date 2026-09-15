@@ -13,13 +13,27 @@ type CrmDirectoryEntry = {
 };
 
 const CRM_DIRECTORY: CrmDirectoryEntry[] = [
-  // Ejemplo para dar de alta GVG Seguros (reemplazar crmBaseUrl por el dominio real
-  // y definir CRM_BRIDGE_SECRET_GVG en las env vars):
-  // {
-  //   username: "usuario.gvg",
-  //   crmBaseUrl: "https://crm.gvgseguros.com",
-  //   bridgeSecretEnvVar: "CRM_BRIDGE_SECRET_GVG",
-  // },
+  // GVG Seguros
+  {
+    username: "CamilaGVG",
+    crmBaseUrl: "https://gvg-crm.zytonai.com",
+    bridgeSecretEnvVar: "CRM_BRIDGE_SECRET_GVG",
+  },
+  {
+    username: "ClaudiaGVG",
+    crmBaseUrl: "https://gvg-crm.zytonai.com",
+    bridgeSecretEnvVar: "CRM_BRIDGE_SECRET_GVG",
+  },
+  {
+    username: "DayanaGVG",
+    crmBaseUrl: "https://gvg-crm.zytonai.com",
+    bridgeSecretEnvVar: "CRM_BRIDGE_SECRET_GVG",
+  },
+  {
+    username: "samuel",
+    crmBaseUrl: "https://gvg-crm.zytonai.com",
+    bridgeSecretEnvVar: "CRM_BRIDGE_SECRET_GVG",
+  },
 ];
 
 export type CrmClientConfig = {

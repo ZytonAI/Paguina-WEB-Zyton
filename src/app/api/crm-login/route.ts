@@ -48,6 +48,11 @@ export async function POST(request: NextRequest) {
   }
 
   if (!crmResponse.ok) {
+    const errorBody = await crmResponse.json().catch(() => null);
+    console.error(
+      `crm-login: el CRM respondió ${crmResponse.status} para username="${username}":`,
+      errorBody
+    );
     return NextResponse.json({ error: GENERIC_ERROR }, { status: 401 });
   }
 
