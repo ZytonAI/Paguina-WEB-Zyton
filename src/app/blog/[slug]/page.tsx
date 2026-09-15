@@ -138,7 +138,7 @@ export default async function BlogPostPage({
 
           <div className="mt-16 border-t border-border pt-8">
             <Link
-              href="/#contacto"
+              href="/contacto"
               className="rounded-full bg-accent px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-accent/90"
             >
               Agenda una llamada

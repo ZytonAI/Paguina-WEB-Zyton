@@ -7,21 +7,21 @@ import Reveal from "./Reveal";
 import GlowBackground from "./GlowBackground";
 
 const fieldClass =
-  "rounded-xl border border-border bg-transparent px-4 py-3 outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20";
+  "rounded-xl border border-border bg-background px-4 py-3 outline-none transition-colors placeholder:text-muted focus:border-accent-strong focus:ring-2 focus:ring-accent/25";
 
 export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
 
   return (
-    <section id="contacto" className="relative scroll-mt-20 overflow-hidden border-t border-border">
+    <section id="contacto" className="relative scroll-mt-20 overflow-hidden">
       <GlowBackground variant="top" />
       <div className="mx-auto max-w-xl px-6 py-24">
         <Reveal>
           <h2 className="text-center text-3xl font-semibold tracking-tight sm:text-4xl">
-            Hablemos
+            Hablemos de tu negocio
           </h2>
           <p className="mt-4 text-center text-muted">
-            Cuéntanos sobre tu negocio y te contactamos para ver cómo podemos ayudarte.
+            Cuéntanos cómo trabajas hoy y te mostramos cómo el CRM se adapta a tu operación.
           </p>
         </Reveal>
 
@@ -33,9 +33,9 @@ export default function ContactForm() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4 }}
-                className="mt-10 flex flex-col items-center gap-3 rounded-2xl border border-accent/30 bg-accent/5 p-10 text-center"
+                className="mt-10 flex flex-col items-center gap-3 rounded-2xl border border-accent/40 bg-accent/5 p-10 text-center"
               >
-                <CheckCircle2 className="text-accent" size={36} strokeWidth={1.5} />
+                <CheckCircle2 className="text-accent-strong" size={36} strokeWidth={1.5} />
                 <p className="text-lg">
                   ¡Gracias! Recibimos tu mensaje y te contactaremos pronto.
                 </p>
@@ -74,7 +74,7 @@ export default function ContactForm() {
                 />
                 <textarea
                   name="mensaje"
-                  placeholder="Cuéntanos sobre tu negocio"
+                  placeholder="¿Cómo llegan y se atienden hoy tus clientes?"
                   rows={4}
                   className={`resize-none ${fieldClass}`}
                 />
@@ -82,7 +82,7 @@ export default function ContactForm() {
                   type="submit"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="mt-2 rounded-full bg-accent px-8 py-3 font-medium text-white shadow-[0_0_30px_-10px_var(--accent)] transition-shadow hover:shadow-[0_0_40px_-8px_var(--accent)]"
+                  className="mt-2 rounded-full bg-accent-strong px-8 py-3 font-medium text-white shadow-[0_10px_30px_-14px_var(--accent-strong)] transition-colors hover:bg-[#0f4fb8]"
                 >
                   Enviar
                 </motion.button>

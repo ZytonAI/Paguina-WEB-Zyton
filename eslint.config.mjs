@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Dependencias reales: el symlink node_modules apunta aquí (ver README/notas).
+    "node_modules.nosync/**",
   ]),
 ]);
 

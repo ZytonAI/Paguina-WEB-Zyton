@@ -16,9 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 const siteUrl = "https://www.zytonai.com";
-const title = "ZytonAI | Automatización con IA para negocios en Colombia";
+const title = "ZytonAI | CRM que unifica y potencia tu negocio";
 const description =
-  "Agencia de automatización con inteligencia artificial en Colombia. Ayudamos a negocios a dar seguimiento automático a cada lead, sin cambiar cómo ya trabajas.";
+  "CRM que reúne toda la información de tu negocio en un solo lugar y se adapta a cómo ya trabajas. Con IA conversacional y canales unificados, para agencias de seguros y negocios de belleza y salud.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -29,12 +29,13 @@ export const metadata: Metadata = {
   description,
   applicationName: "ZytonAI",
   keywords: [
-    "automatización con inteligencia artificial",
-    "agencia de automatización IA",
-    "seguimiento automático de leads",
-    "IA para negocios Colombia",
-    "automatización de ventas",
-    "chatbot IA para empresas",
+    "CRM personalizado",
+    "CRM para agencias de seguros",
+    "CRM para spas y clínicas dentales",
+    "software de gestión de clientes Colombia",
+    "IA conversacional para negocios",
+    "unificación de canales de comunicación",
+    "recordatorio de vencimiento de pólizas",
   ],
   authors: [{ name: "ZytonAI" }],
   alternates: {
@@ -61,7 +62,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "ZytonAI — Intelligence. Automated.",
+        alt: "ZytonAI — Unifica y potencia tu negocio",
       },
     ],
   },
@@ -79,7 +80,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#000000",
+  themeColor: "#ffffff",
 };
 
 const organizationJsonLd = {
@@ -95,7 +96,7 @@ const organizationJsonLd = {
     name: "Colombia",
   },
   knowsLanguage: "es",
-  slogan: "Intelligence. Automated.",
+  slogan: "Unifica y potencia tu negocio",
   sameAs: [
     "https://www.linkedin.com/company/zyton-ai/",
     "https://www.instagram.com/zytonai/",
@@ -105,36 +106,36 @@ const organizationJsonLd = {
       "@type": "Offer",
       itemOffered: {
         "@type": "Service",
-        name: "Seguimiento automático de leads",
+        name: "CRM unificado y personalizado",
         description:
-          "Respuesta instantánea a cada nuevo contacto para que ninguna oportunidad se enfríe por falta de seguimiento.",
+          "Toda la información del negocio en un solo lugar, con el CRM configurado alrededor de la operación de cada cliente.",
       },
     },
     {
       "@type": "Offer",
       itemOffered: {
         "@type": "Service",
-        name: "Respuestas con IA 24/7",
+        name: "IA conversacional y unificación de canales",
         description:
-          "IA entrenada para responder preguntas frecuentes y calificar clientes potenciales en cualquier horario.",
+          "WhatsApp, correo, formularios y redes en una sola bandeja, con IA entrenada para responder y clasificar cada conversación.",
       },
     },
     {
       "@type": "Offer",
       itemOffered: {
         "@type": "Service",
-        name: "Integración con herramientas existentes",
+        name: "Recordatorios automáticos",
         description:
-          "Conexión con CRM, WhatsApp, correo y otras herramientas sin migrar ni cambiar procesos.",
+          "Avisos por vencimiento de pólizas, citas próximas y clientes sin contactar, antes de que se pierda la oportunidad.",
       },
     },
     {
       "@type": "Offer",
       itemOffered: {
         "@type": "Service",
-        name: "Reportes de automatización",
+        name: "Desarrollo personalizado de soluciones",
         description:
-          "Visibilidad clara de qué leads están siendo atendidos y qué resultados está dando la automatización.",
+          "Digitalización de pólizas y fichas de clientes a partir de una foto, y soluciones diseñadas a la medida de cada operación.",
       },
     },
   ],

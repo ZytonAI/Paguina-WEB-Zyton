@@ -1,17 +1,25 @@
 @import "tailwindcss";
 
 :root {
-  --background: #000000;
-  --foreground: #f5f5f5;
+  --background: #ffffff;
+  /* Superficie sutil para alternar secciones y dar ritmo vertical. */
+  --surface: #f6f8fc;
+  --foreground: #0a0f1a;
+  /* Azul de marca. Solo decorativo (glows, tintes, iconos sobre fondo tintado):
+     da 3.75:1 sobre blanco, insuficiente para texto. */
   --accent: #2f7fff;
-  --muted: #9a9a9a;
-  --border: #1f1f1f;
+  /* Azul para texto, enlaces y botones con texto blanco: 5.83:1 sobre blanco. */
+  --accent-strong: #155ed6;
+  --muted: #5a6472;
+  --border: #e5e8ec;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
   --color-muted: var(--muted);
   --color-border: var(--border);
   --font-sans: var(--font-geist-sans);
@@ -77,5 +85,17 @@ body {
   .animate-float,
   .animate-pulse-opacity {
     animation: none;
+  }
+
+  /* Anula el movimiento que framer-motion aplica como estilo en línea. El
+     control se hace por CSS y no en JS para no romper la hidratación:
+     useReducedMotion() siempre devuelve false en el servidor. */
+  .parallax-layer {
+    transform: none !important;
+  }
+
+  .reveal-motion {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

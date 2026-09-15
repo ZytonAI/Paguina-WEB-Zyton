@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 
 const fieldClass =
-  "rounded-xl border border-border bg-transparent px-4 py-3 outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20";
+  "rounded-xl border border-border bg-background px-4 py-3 outline-none transition-colors placeholder:text-muted focus:border-accent-strong focus:ring-2 focus:ring-accent/25";
 
 export default function CrmLoginModal({
   open,
@@ -62,7 +62,7 @@ export default function CrmLoginModal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 px-6"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#0a0f1a]/50 px-6"
           onClick={handleClose}
         >
           <motion.div
@@ -70,7 +70,7 @@ export default function CrmLoginModal({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="relative w-full max-w-sm rounded-2xl border border-border bg-background p-8"
+            className="relative w-full max-w-sm rounded-2xl border border-border bg-background p-8 shadow-[0_24px_60px_-20px_rgba(10,15,26,0.35)]"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -109,14 +109,14 @@ export default function CrmLoginModal({
                 className={fieldClass}
               />
 
-              {error && <p className="text-sm text-red-400">{error}</p>}
+              {error && <p className="text-sm text-red-600">{error}</p>}
 
               <motion.button
                 type="submit"
                 disabled={loading}
                 whileHover={{ scale: loading ? 1 : 1.02 }}
                 whileTap={{ scale: loading ? 1 : 0.98 }}
-                className="mt-2 rounded-full bg-accent px-8 py-3 font-medium text-white shadow-[0_0_30px_-10px_var(--accent)] transition-shadow hover:shadow-[0_0_40px_-8px_var(--accent)] disabled:opacity-60"
+                className="mt-2 rounded-full bg-accent-strong px-8 py-3 font-medium text-white transition-colors hover:bg-[#0f4fb8] disabled:opacity-60"
               >
                 {loading ? "Ingresando…" : "Ingresar"}
               </motion.button>

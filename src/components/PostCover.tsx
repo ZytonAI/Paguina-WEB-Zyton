@@ -20,13 +20,13 @@ export default function PostCover({
 
   return (
     <div
-      className={`relative flex items-center justify-center overflow-hidden rounded-2xl border border-border bg-white/[0.02] ${
+      className={`relative flex items-center justify-center overflow-hidden rounded-2xl border border-border bg-surface ${
         isLarge ? "h-64 sm:h-80" : "h-40"
       }`}
     >
       <GlowBackground variant="top" />
       <div
-        className={`relative flex items-center justify-center rounded-full bg-accent/10 text-accent ${
+        className={`relative flex items-center justify-center rounded-full bg-accent/10 text-accent-strong ${
           isLarge ? "h-24 w-24" : "h-16 w-16"
         }`}
       >
