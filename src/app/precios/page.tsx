@@ -64,6 +64,8 @@ const plans: Plan[] = [
       "Bandeja unificada con todos tus canales",
       "Respuestas automatizadas por WhatsApp",
       "Landing de captación de clientes incluida",
+      "Pide landings de promoción personalizadas, sin costo",
+      "Fidelización de clientes",
       "Trae tus clientes del Excel a un panel de verdad",
       "Atención prioritaria: tus solicitudes van primero",
     ],
