@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/posts";
+import { legalDocuments, legalUpdatedAt } from "@/lib/legal";
 
 const siteUrl = "https://www.zytonai.com";
 
@@ -35,6 +36,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.8,
     },
+    ...legalDocuments.map((doc) => ({
+      url: `${siteUrl}${doc.href}`,
+      lastModified: new Date(legalUpdatedAt),
+      changeFrequency: "yearly" as const,
+      priority: 0.3,
+    })),
     ...getAllPosts().map((post) => ({
       url: `${siteUrl}/blog/${post.slug}`,
       lastModified: new Date(post.date),

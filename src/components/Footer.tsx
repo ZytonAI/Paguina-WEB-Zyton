@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { legalDocuments } from "@/lib/legal";
 
 const sections = [
   { href: "/", label: "¿Qué hacemos?" },
@@ -26,7 +27,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="flex gap-14">
+          <div className="flex flex-wrap gap-14">
             <nav aria-label="Secciones">
               <h2 className="text-sm font-medium text-foreground">Secciones</h2>
               <ul className="mt-3 flex flex-col gap-2 text-sm text-muted">
@@ -66,6 +67,22 @@ export default function Footer() {
                     Instagram
                   </a>
                 </li>
+              </ul>
+            </nav>
+
+            <nav aria-label="Legal">
+              <h2 className="text-sm font-medium text-foreground">Legal</h2>
+              <ul className="mt-3 flex flex-col gap-2 text-sm text-muted">
+                {legalDocuments.map((doc) => (
+                  <li key={doc.href}>
+                    <Link
+                      href={doc.href}
+                      className="transition-colors hover:text-foreground"
+                    >
+                      {doc.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </nav>
           </div>
