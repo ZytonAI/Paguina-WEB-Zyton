@@ -9,7 +9,7 @@ import GlowBackground from "@/components/GlowBackground";
 export const metadata: Metadata = {
   title: "Precios",
   description:
-    "Planes del CRM de ZytonAI: plan Base desde $300.000 COP al mes, plan Pro con respuestas automatizadas por WhatsApp y landing de captación, y desarrollo a medida para grandes empresas.",
+    "Planes del CRM de ZytonAI: plan Base desde $300.000 COP al mes, plan Pro con bandeja unificada de WhatsApp e Instagram, respuestas automatizadas y captación desde Meta Ads, y desarrollo a medida para grandes empresas.",
   alternates: {
     canonical: "/precios",
   },
@@ -24,6 +24,7 @@ type Plan = {
   description: string;
   inherits?: string;
   features: string[];
+  costsNote?: string;
   cta: string;
   featured: boolean;
 };
@@ -39,12 +40,11 @@ const plans: Plan[] = [
       "El CRM completo con tu marca, para negocios que quieren ordenar su información y arrancar sin una implementación larga.",
     features: [
       "Marca blanca: el CRM va con tu identidad",
-      "Usuarios ilimitados",
+      "Hasta 10 usuarios",
       "Historial completo de cada cliente",
-      "Alertas de vencimiento y recordatorios de cita",
-      "Digitaliza pólizas y fichas con una foto",
+      "Alertas de vencimiento y recordatorios de citas a tus clientes",
       "Plantillas a elección",
-      "Mensajes fijos automatizados",
+      "Mensajes fijos automatizados por WhatsApp y/o correo",
       "Acompañamiento en la implementación",
       "Actualizaciones incluidas",
     ],
@@ -61,14 +61,18 @@ const plans: Plan[] = [
       "Para negocios que además quieren automatizar la conversación con el cliente y captar por su cuenta.",
     inherits: "Todo lo del plan Base, y además:",
     features: [
-      "Bandeja unificada con todos tus canales",
+      "Bandeja unificada con todos tus canales: WhatsApp e Instagram",
       "Respuestas automatizadas por WhatsApp",
-      "Landing de captación de clientes incluida",
       "Pide landings de promoción personalizadas, sin costo",
       "Fidelización de clientes",
       "Trae tus clientes del Excel a un panel de verdad",
+      "Análisis y captación de leads de tus campañas de Meta Ads",
+      "Integración para facturas electrónicas (DIAN)",
       "Atención prioritaria: tus solicitudes van primero",
+      "Hasta 25 usuarios",
     ],
+    costsNote:
+      "Los costos de IA están incluidos. Los costos de Meta (WhatsApp Business API y Meta Ads) se pagan aparte, directamente a Meta.",
     cta: "Hablar del plan Pro",
     featured: true,
   },
@@ -105,8 +109,8 @@ export default function PreciosPage() {
               Un plan según el tamaño de tu operación
             </h1>
             <p className="mt-6 text-lg leading-relaxed text-muted">
-              El CRM va con tu marca y usuarios ilimitados desde el primer plan.
-              Sin migraciones ni cambios en tu forma de trabajar.
+              El CRM va con tu marca desde el primer plan. Sin migraciones ni
+              cambios en tu forma de trabajar.
             </p>
           </div>
         </section>
@@ -186,6 +190,12 @@ export default function PreciosPage() {
                         </li>
                       ))}
                     </ul>
+
+                    {plan.costsNote && (
+                      <p className="-mt-4 mb-9 rounded-2xl bg-background/70 px-4 py-3 text-xs leading-relaxed text-muted ring-1 ring-border">
+                        {plan.costsNote}
+                      </p>
+                    )}
 
                     <Link
                       href="/contacto"
