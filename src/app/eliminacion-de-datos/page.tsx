@@ -3,7 +3,7 @@ import LegalPage from "@/components/LegalPage";
 import { legalEntity } from "@/lib/legal";
 
 export const metadata: Metadata = {
-  title: "Cómo pedir la eliminación de tus datos",
+  title: "Eliminación de datos",
   description:
     "Pasos para solicitar a ZytonAI la eliminación de tus datos personales, seas empresa usuaria, cliente de una empresa o hayas conectado tu cuenta de Facebook, Instagram o Google.",
   alternates: {

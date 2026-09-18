@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function TerminosPage() {
   return (
     <LegalPage
-      eyebrow="Términos"
+      eyebrow="Términos y condiciones"
       title="Términos y condiciones del servicio"
     >
       <p>

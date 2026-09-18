@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function PrivacidadPage() {
   return (
     <LegalPage
-      eyebrow="Privacidad"
+      eyebrow="Política de privacidad"
       title="Política de privacidad y tratamiento de datos personales"
     >
       <p>
