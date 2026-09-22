@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Check, Plus } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import GlowBackground from "@/components/GlowBackground";
+import PlanesPrecios from "@/components/PlanesPrecios";
 
 export const metadata: Metadata = {
   title: "Precios",
@@ -14,85 +14,6 @@ export const metadata: Metadata = {
     canonical: "/precios",
   },
 };
-
-type Plan = {
-  name: string;
-  price: string;
-  period: string;
-  note?: string;
-  highlightNote?: string;
-  description: string;
-  inherits?: string;
-  features: string[];
-  costsNote?: string;
-  cta: string;
-  featured: boolean;
-};
-
-const plans: Plan[] = [
-  {
-    name: "Base",
-    price: "$350.000",
-    period: "COP / mes",
-    note: "o $300.000 al mes pagando el año",
-    highlightNote: "Ahorras $600.000 al año",
-    description:
-      "El CRM completo con tu marca, para negocios que quieren ordenar su información y arrancar sin una implementación larga.",
-    features: [
-      "Marca blanca: el CRM va con tu identidad",
-      "Hasta 10 usuarios",
-      "Historial completo de cada cliente",
-      "Alertas de vencimiento y recordatorios de citas a tus clientes",
-      "Plantillas a elección",
-      "Mensajes fijos automatizados por WhatsApp y/o correo",
-      "Acompañamiento en la implementación",
-      "Actualizaciones incluidas",
-    ],
-    cta: "Empezar con Base",
-    featured: false,
-  },
-  {
-    name: "Pro",
-    price: "$500.000",
-    period: "COP / mes",
-    note: "Implementación de $2.400.000",
-    highlightNote: "Difiérela hasta 12 meses, desde $200.000 al mes",
-    description:
-      "Para negocios que además quieren automatizar la conversación con el cliente y captar por su cuenta.",
-    inherits: "Todo lo del plan Base, y además:",
-    features: [
-      "Bandeja unificada con todos tus canales: WhatsApp e Instagram",
-      "Respuestas automatizadas por WhatsApp",
-      "Pide landings de promoción personalizadas, sin costo",
-      "Fidelización de clientes",
-      "Trae tus clientes del Excel a un panel de verdad",
-      "Análisis y captación de leads de tus campañas de Meta Ads",
-      "Integración para facturas electrónicas (DIAN)",
-      "Atención prioritaria: tus solicitudes van primero",
-      "Hasta 25 usuarios",
-    ],
-    costsNote:
-      "Los costos de IA están incluidos. Los costos de Meta (WhatsApp Business API y Meta Ads) se pagan aparte, directamente a Meta.",
-    cta: "Hablar del plan Pro",
-    featured: true,
-  },
-  {
-    name: "A medida",
-    price: "Hablemos",
-    period: "para grandes empresas",
-    description:
-      "Para operaciones con procesos propios, varios equipos o integraciones específicas.",
-    inherits: "Todo lo del plan Pro, y además:",
-    features: [
-      "Diagnóstico de tu operación actual",
-      "Automatizaciones diseñadas a tu proceso",
-      "Integraciones a la medida",
-      "Acompañamiento dedicado",
-    ],
-    cta: "Contáctanos directamente",
-    featured: false,
-  },
-];
 
 export default function PreciosPage() {
   return (
@@ -117,103 +38,11 @@ export default function PreciosPage() {
 
         <section className="pb-24 sm:pb-32">
           <div className="mx-auto w-full max-w-6xl px-6 sm:px-10 lg:px-16">
-            <div className="grid items-start gap-6 lg:grid-cols-3 lg:gap-8">
-              {plans.map((plan, i) => (
-                <Reveal
-                  key={plan.name}
-                  delay={i * 0.1}
-                  variant="panel"
-                  className="h-full"
-                >
-                  <div
-                    className={`flex h-full flex-col rounded-[1.75rem] p-8 transition-[transform,box-shadow] duration-300 ease-out motion-reduce:transform-none sm:p-10 ${
-                      plan.featured
-                        ? "bg-accent/[0.05] ring-1 ring-accent/20 hover:-translate-y-1.5"
-                        : "bg-surface hover:-translate-y-1.5"
-                    }`}
-                  >
-                    <div className="flex items-center justify-between gap-3">
-                      <h2 className="text-lg font-medium">{plan.name}</h2>
-                      {plan.featured && (
-                        <span className="rounded-full bg-accent-strong px-3 py-1 text-xs font-medium text-white">
-                          Más completo
-                        </span>
-                      )}
-                    </div>
-
-                    <p className="mt-7 text-4xl font-semibold tracking-tight">
-                      {plan.price}
-                    </p>
-                    <p className="mt-2 text-sm text-muted">{plan.period}</p>
-
-                    {plan.note && (
-                      <div className="mt-5 border-t border-border pt-5">
-                        <p className="text-sm text-foreground">{plan.note}</p>
-                        {plan.highlightNote && (
-                          <p className="mt-1 text-sm font-medium text-accent-strong">
-                            {plan.highlightNote}
-                          </p>
-                        )}
-                      </div>
-                    )}
-
-                    <p className="mt-6 leading-relaxed text-muted">
-                      {plan.description}
-                    </p>
-
-                    {plan.inherits && (
-                      <p className="mt-7 flex items-center gap-2 text-sm font-medium text-foreground">
-                        <Plus
-                          size={16}
-                          strokeWidth={2.5}
-                          className="shrink-0 text-accent-strong"
-                          aria-hidden
-                        />
-                        {plan.inherits}
-                      </p>
-                    )}
-
-                    <ul
-                      className={`flex flex-col gap-3.5 pb-9 text-sm ${
-                        plan.inherits ? "mt-4" : "mt-7"
-                      }`}
-                    >
-                      {plan.features.map((feature) => (
-                        <li key={feature} className="flex items-start gap-3">
-                          <Check
-                            size={18}
-                            strokeWidth={2.25}
-                            className="mt-0.5 shrink-0 text-accent-strong"
-                            aria-hidden
-                          />
-                          <span className="leading-relaxed">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    {plan.costsNote && (
-                      <p className="-mt-4 mb-9 rounded-2xl bg-background/70 px-4 py-3 text-xs leading-relaxed text-muted ring-1 ring-border">
-                        {plan.costsNote}
-                      </p>
-                    )}
-
-                    <Link
-                      href="/contacto"
-                      className={`mt-auto rounded-full px-6 py-3.5 text-center text-sm font-medium transition-colors ${
-                        plan.featured
-                          ? "bg-accent-strong text-white hover:bg-[#0f4fb8]"
-                          : "border border-border bg-background text-foreground hover:border-accent-strong hover:text-accent-strong"
-                      }`}
-                    >
-                      {plan.cta}
-                    </Link>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
+            <PlanesPrecios />
 
             <p className="mt-12 text-center text-sm leading-relaxed text-muted">
-              Precios en pesos colombianos, antes de IVA.
+              Precios en pesos colombianos, antes de IVA. Al elegir un plan te
+              pedimos los datos de tu empresa y pasas al pago seguro con Wompi.
             </p>
           </div>
         </section>
