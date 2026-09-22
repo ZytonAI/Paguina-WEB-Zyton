@@ -16,6 +16,10 @@ export default function CrmLoginModal({
 }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [empresa, setEmpresa] = useState("");
+  // Solo se pide la empresa cuando el mismo usuario existe en más de una:
+  // el CRM lo dice con un 409 y a partir de ahí el campo se queda visible.
+  const [pedirEmpresa, setPedirEmpresa] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -28,9 +32,16 @@ export default function CrmLoginModal({
       const res = await fetch("/api/crm-login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password, empresa: pedirEmpresa ? empresa : undefined }),
       });
       const data = await res.json().catch(() => null);
+
+      if (res.status === 409 && data?.necesitaEmpresa) {
+        setPedirEmpresa(true);
+        setError(data?.error ?? "Escribe el nombre de tu empresa para continuar.");
+        setLoading(false);
+        return;
+      }
 
       if (!res.ok || typeof data?.redirectUrl !== "string") {
         setError(data?.error ?? "No se pudo iniciar sesión. Intenta nuevamente.");
@@ -51,6 +62,8 @@ export default function CrmLoginModal({
     if (loading) return;
     setUsername("");
     setPassword("");
+    setEmpresa("");
+    setPedirEmpresa(false);
     setError(null);
     onClose();
   }
@@ -84,7 +97,7 @@ export default function CrmLoginModal({
 
             <h2 className="text-xl font-semibold tracking-tight">Ingresar a CRM</h2>
             <p className="mt-2 text-sm text-muted">
-              Usa las credenciales de tu CRM.
+              Usa tu usuario y contraseña del CRM. Te llevamos al de tu empresa.
             </p>
 
             <form className="mt-6 flex flex-col gap-4" onSubmit={handleSubmit}>
@@ -108,6 +121,26 @@ export default function CrmLoginModal({
                 onChange={(e) => setPassword(e.target.value)}
                 className={fieldClass}
               />
+
+              {pedirEmpresa && (
+                <div className="flex flex-col gap-1.5">
+                  <input
+                    type="text"
+                    name="empresa"
+                    placeholder="Empresa"
+                    autoComplete="organization"
+                    autoFocus
+                    required
+                    value={empresa}
+                    onChange={(e) => setEmpresa(e.target.value)}
+                    className={fieldClass}
+                  />
+                  <p className="text-xs text-muted">
+                    Es la primera parte de la dirección de tu CRM:{" "}
+                    <span className="font-medium text-foreground">empresa</span>.zytonai.com
+                  </p>
+                </div>
+              )}
 
               {error && <p className="text-sm text-red-600">{error}</p>}
 
