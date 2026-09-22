@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 
@@ -22,6 +23,17 @@ export default function CrmLoginModal({
   const [pedirEmpresa, setPedirEmpresa] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  // Con el modal abierto, el fondo no debe moverse: si no, al hacer scroll
+  // dentro del formulario se arrastra la página de detrás.
+  useEffect(() => {
+    if (!open) return;
+    const previo = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previo;
+    };
+  }, [open]);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -68,22 +80,31 @@ export default function CrmLoginModal({
     onClose();
   }
 
-  return (
+  const contenido = (
     <AnimatePresence>
       {open && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#0a0f1a]/50 px-6"
+          // `items-center` a secas cortaba el modal por arriba en pantallas
+          // bajas (y al aparecer el campo «Empresa», que lo hace más alto):
+          // lo que sobresalía quedaba fuera y sin forma de llegar a ello.
+          // Con scroll en la capa y `min-h-full` dentro, se centra cuando cabe
+          // y se puede recorrer cuando no.
+          className="fixed inset-0 z-[100] overflow-y-auto overscroll-contain bg-[#0a0f1a]/50"
           onClick={handleClose}
         >
+          {/* El relleno va AQUI, en la capa que se desplaza: puesto en el
+              contenedor fijo, lo que sobresale por arriba queda fuera del
+              alcance del scroll y no hay forma de leer el título. */}
+          <div className="flex min-h-full items-center justify-center px-4 py-8 sm:px-6">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="relative w-full max-w-sm rounded-2xl border border-border bg-background p-8 shadow-[0_24px_60px_-20px_rgba(10,15,26,0.35)]"
+            className="relative w-full max-w-sm rounded-2xl border border-border bg-background p-7 shadow-[0_24px_60px_-20px_rgba(10,15,26,0.35)] sm:p-8"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -155,8 +176,21 @@ export default function CrmLoginModal({
               </motion.button>
             </form>
           </motion.div>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
   );
+
+  // El modal se pinta en <body>, no donde está el botón: el <header> lleva
+  // `backdrop-blur`, y un ancestro con filtro (igual que uno con transform)
+  // hace que `position: fixed` se ancle A ÉL y no a la ventana. Por eso el
+  // cuadro salía pegado arriba, dentro de los 70px del header, en vez de
+  // centrado en la pantalla.
+  //
+  // En el servidor no hay `document`. No hay riesgo de descuadre al hidratar
+  // porque con el modal cerrado —que es como llega siempre la página— esto no
+  // pinta ningún nodo.
+  if (typeof document === "undefined") return null;
+  return createPortal(contenido, document.body);
 }
