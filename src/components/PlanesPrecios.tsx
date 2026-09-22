@@ -73,10 +73,10 @@ const plans: Plan[] = [
         highlightNote: "Difiérela hasta 12 meses, desde $200.000 al mes",
       },
       anual: {
-        price: "$500.000",
+        price: "$450.000",
         period: "COP / mes",
-        note: "Se paga de una vez: $6.000.000 al año. Implementación de $2.400.000",
-        highlightNote: "Difiérela hasta 12 meses, desde $200.000 al mes",
+        note: "Se paga de una vez: $5.400.000 al año. Implementación de $2.400.000",
+        highlightNote: "Ahorras $600.000 al año · difiere la implementación hasta 12 meses",
       },
     },
     description:
