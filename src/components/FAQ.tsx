@@ -27,6 +27,14 @@ const faqs = [
       "La IA se entrena con la información de tu negocio para responder preguntas frecuentes y clasificar conversaciones las 24 horas. Los casos que requieren criterio humano se derivan a tu equipo.",
   },
   {
+    // Se dice en la venta, y no cuando el cliente lo descubre: ZytonAI no es
+    // un proveedor tecnológico de la DIAN y el recibo del CRM no tiene
+    // validez fiscal. Prometerlo a medias sería peor que no ofrecerlo.
+    question: "¿ZytonAI emite facturas electrónicas ante la DIAN?",
+    answer:
+      "No. El CRM genera un comprobante de venta con tu marca y consecutivo propio, que sirve como constancia para el cliente y como control interno, pero no tiene validez fiscal. La factura electrónica la sigues emitiendo con tu facturador o tu contador, y para que eso no sea trabajo doble el CRM te exporta las ventas del mes en un archivo listo para cargar.",
+  },
+  {
     question: "¿Cuánto tiempo toma implementarlo?",
     answer:
       "Depende de la complejidad de tus procesos actuales y de cuánto haya que desarrollar a la medida, pero el objetivo siempre es implementar sin interrumpir tu operación diaria.",
