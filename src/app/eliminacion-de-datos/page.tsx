@@ -29,9 +29,8 @@ export default function EliminacionDeDatosPage() {
       <h2>Si eres una empresa usuaria de ZytonAI</h2>
       <ol>
         <li>
-          Desconecta las integraciones que tengas activas (Google, Meta,
-          facturación) desde Configuración. Eso revoca los permisos en cada
-          servicio.
+          Desconecta las integraciones que tengas activas (Google, Meta) desde
+          Configuración. Eso revoca los permisos en cada servicio.
         </li>
         <li>
           Escribe a {soporte} desde el correo de la cuenta gerente con el asunto

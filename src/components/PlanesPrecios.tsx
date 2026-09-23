@@ -89,7 +89,6 @@ const plans: Plan[] = [
       "Fidelización de clientes",
       "Trae tus clientes del Excel a un panel de verdad",
       "Análisis y captación de leads de tus campañas de Meta Ads",
-      "Integración para facturas electrónicas (DIAN)",
       "Atención prioritaria: tus solicitudes van primero",
       "Hasta 25 usuarios",
     ],

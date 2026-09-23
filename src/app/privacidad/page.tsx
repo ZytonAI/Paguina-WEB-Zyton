@@ -134,12 +134,6 @@ export default function PrivacidadPage() {
           No publica contenido ni modifica anuncios.
         </li>
         <li>
-          <strong>Proveedores de facturación electrónica</strong> (Alegra,
-          Siigo, Factus): si la empresa los conecta, se les envían los datos de
-          la venta y del cliente necesarios para emitir la factura ante la
-          DIAN.
-        </li>
-        <li>
           <strong>Wompi</strong> procesa los pagos de la suscripción. ZytonAI no
           guarda datos de tarjetas.
         </li>
@@ -153,8 +147,8 @@ export default function PrivacidadPage() {
       <h2>5. Seguridad</h2>
       <p>
         Los datos viajan cifrados (HTTPS). Las credenciales de servicios de
-        terceros (tokens de Google, Meta y proveedores de facturación) se
-        guardan cifradas y nunca se muestran de nuevo. Cada empresa solo puede
+        terceros (tokens de Google y Meta) se guardan cifradas y nunca se
+        muestran de nuevo. Cada empresa solo puede
         ver sus propios datos, con controles en la base de datos y en la
         aplicación. El acceso del equipo de ZytonAI se limita a soporte y
         operación.

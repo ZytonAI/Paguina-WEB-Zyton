@@ -36,9 +36,8 @@ export default function TerminosPage() {
         ZytonAI pone a disposición de cada empresa un espacio propio, accesible
         por su subdominio, para gestionar clientes, cobros, agenda, programas de
         fidelización, automatizaciones y comunicación por WhatsApp e Instagram,
-        además de integraciones opcionales con Google Calendar, Meta Ads y
-        proveedores de facturación electrónica. Las funciones disponibles
-        dependen del plan contratado.
+        además de integraciones opcionales con Google Calendar y Meta Ads. Las
+        funciones disponibles dependen del plan contratado.
       </p>
 
       <h2>2. Cuenta y usuarios</h2>
@@ -107,20 +106,22 @@ export default function TerminosPage() {
 
       <h2>6. Integraciones de terceros</h2>
       <p>
-        Las conexiones con Google, Meta, Wompi y proveedores de facturación se
-        hacen con las credenciales y bajo los términos de cada uno de esos
-        servicios. ZytonAI no responde por cambios, interrupciones, costos o
+        Las conexiones con Google, Meta y Wompi se hacen con las credenciales
+        y bajo los términos de cada uno de esos servicios. ZytonAI no responde por cambios, interrupciones, costos o
         decisiones de esos terceros (por ejemplo, el rechazo de una plantilla
         de WhatsApp o la suspensión de una cuenta publicitaria).
       </p>
 
-      <h2>7. Comprobantes y facturación electrónica</h2>
+      <h2>7. Comprobantes de venta</h2>
       <p>
         Los recibos de venta que genera la plataforma son comprobantes internos
-        sin validez fiscal, y así lo indican. La factura electrónica ante la
-        DIAN la emite el proveedor certificado que la empresa conecte, con sus
-        propias credenciales; la empresa es responsable de la información
-        fiscal que registra.
+        sin validez fiscal, y así lo indican en el propio documento.
+      </p>
+      <p>
+        <strong>ZytonAI no emite facturas electrónicas ante la DIAN</strong> ni
+        actúa como proveedor tecnológico de facturación. La empresa sigue
+        emitiendo sus facturas por los medios que ya utiliza, y es la única
+        responsable de cumplir con sus obligaciones fiscales.
       </p>
 
       <h2>8. Disponibilidad y soporte</h2>
