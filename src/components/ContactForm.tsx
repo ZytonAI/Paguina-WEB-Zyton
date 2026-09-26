@@ -11,6 +11,28 @@ const fieldClass =
 
 export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [enviando, setEnviando] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Va a /api/contacto, que crea el lead en el CRM interno del equipo.
+  async function enviar(form: HTMLFormElement) {
+    setEnviando(true);
+    setError(null);
+    try {
+      const r = await fetch("/api/contacto", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+      });
+      const data = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(data.error || "No pudimos enviar tu mensaje.");
+      setSubmitted(true);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "No pudimos enviar tu mensaje.");
+    } finally {
+      setEnviando(false);
+    }
+  }
 
   return (
     <section id="contacto" className="relative scroll-mt-20 overflow-hidden">
@@ -49,9 +71,18 @@ export default function ContactForm() {
                 className="mt-10 flex flex-col gap-4"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  setSubmitted(true);
+                  enviar(e.currentTarget);
                 }}
               >
+                {/* Trampa para bots: oculta para las personas. */}
+                <input
+                  type="text"
+                  name="sitio"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="hidden"
+                />
                 <input
                   type="text"
                   name="nombre"
@@ -72,19 +103,31 @@ export default function ContactForm() {
                   required
                   className={fieldClass}
                 />
+                <input
+                  type="tel"
+                  name="telefono"
+                  placeholder="WhatsApp (opcional)"
+                  className={fieldClass}
+                />
                 <textarea
                   name="mensaje"
                   placeholder="¿Cómo llegan y se atienden hoy tus clientes?"
                   rows={4}
                   className={`resize-none ${fieldClass}`}
                 />
+                {error && (
+                  <p role="alert" className="text-sm text-red-500">
+                    {error}
+                  </p>
+                )}
                 <motion.button
                   type="submit"
+                  disabled={enviando}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="mt-2 rounded-full bg-accent-strong px-8 py-3 font-medium text-white shadow-[0_10px_30px_-14px_var(--accent-strong)] transition-colors hover:bg-[#0f4fb8]"
                 >
-                  Enviar
+                  {enviando ? "Enviando…" : "Enviar"}
                 </motion.button>
               </motion.form>
             )}

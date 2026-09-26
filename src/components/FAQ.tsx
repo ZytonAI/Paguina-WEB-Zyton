@@ -27,6 +27,13 @@ const faqs = [
       "La IA se entrena con la información de tu negocio para responder preguntas frecuentes y clasificar conversaciones las 24 horas. Los casos que requieren criterio humano se derivan a tu equipo.",
   },
   {
+    // Mismas cifras que `plans.py` del SaaS (RESPUESTAS_IA_POR_PLAN y
+    // PAQUETES_RESPUESTAS_IA): si cambian allá, cambian aquí.
+    question: "¿Cuántas respuestas puede dar el asistente con IA?",
+    answer:
+      "El plan Pro incluye 6.000 respuestas al mes, que alcanzan para el día a día de la mayoría de negocios. El CRM te avisa cuando vas por el 80 %, y si te hacen falta compras un paquete de 1.000 ($20.000) o de 3.000 ($50.000) respuestas extra, válido para ese mes. Si llegas al tope sin comprar más, el asistente deja de contestar y los mensajes le llegan a tu equipo como siempre.",
+  },
+  {
     // Se dice en la venta, y no cuando el cliente lo descubre: ZytonAI no es
     // un proveedor tecnológico de la DIAN y el recibo del CRM no tiene
     // validez fiscal. Prometerlo a medias sería peor que no ofrecerlo.

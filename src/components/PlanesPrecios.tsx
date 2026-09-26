@@ -79,7 +79,7 @@ const plans: Plan[] = [
     inherits: "Todo lo del plan Base, y además:",
     features: [
       "Bandeja unificada con todos tus canales: WhatsApp e Instagram",
-      "Respuestas automatizadas por WhatsApp",
+      "Asistente con IA que responde por WhatsApp e Instagram: 6.000 respuestas al mes incluidas",
       "Pide landings de promoción personalizadas, sin costo",
       "Fidelización de clientes",
       "Trae tus clientes del Excel a un panel de verdad",
@@ -88,7 +88,7 @@ const plans: Plan[] = [
       "Hasta 25 usuarios",
     ],
     costsNote:
-      "Los costos de IA están incluidos. Los costos de Meta (WhatsApp Business API y Meta Ads) se pagan aparte, directamente a Meta.",
+      "Los costos de IA están incluidos hasta 6.000 respuestas al mes; si necesitas más, hay paquetes de 1.000 ($20.000) y 3.000 ($50.000). Los costos de Meta (WhatsApp Business API y Meta Ads) se pagan aparte, directamente a Meta.",
     cta: "Empezar con Pro",
     featured: true,
   },
