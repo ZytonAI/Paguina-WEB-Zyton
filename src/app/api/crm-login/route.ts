@@ -80,6 +80,14 @@ export async function POST(request: NextRequest) {
   if (!crmResponse.ok) {
     const errorBody = await crmResponse.json().catch(() => null);
     const detail = (errorBody as { detail?: unknown } | null)?.detail;
+    // El secreto de esta web no coincide con PUENTE_WEB_SECRET de la API. Es
+    // un error nuestro de configuración, no de la persona: decirle «secreto
+    // inválido» le hacía creer que se equivocó de contraseña (pasó el 1 de
+    // octubre de 2026, tras rotar las llaves en Easypanel y no en Vercel).
+    if (crmResponse.status === 401 && detail === "Secreto invalido.") {
+      console.error("crm-login: CRM_BRIDGE_SECRET no coincide con PUENTE_WEB_SECRET de la API");
+      return NextResponse.json({ error: UNAVAILABLE_ERROR }, { status: 503 });
+    }
     // 401 y 403 traen un motivo pensado para la persona ("cuenta suspendida");
     // cualquier otro código se registra y se responde con el genérico.
     if ((crmResponse.status === 401 || crmResponse.status === 403) && typeof detail === "string") {
