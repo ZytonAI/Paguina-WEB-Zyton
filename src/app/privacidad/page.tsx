@@ -110,10 +110,18 @@ export default function PrivacidadPage() {
       <ul>
         <li>
           <strong>Google Calendar.</strong> Si una persona conecta su cuenta de
-          Google, ZytonAI crea y actualiza en su calendario los eventos de las
-          citas agendadas en el CRM (con invitados, enlace de Google Meet y
-          recordatorios) y lee su correo para identificar la cuenta. No se lee
-          ningún otro evento ni dato del calendario. El uso de la información
+          Google, ZytonAI crea, actualiza y cancela en el calendario que esa
+          persona elija los eventos de las citas agendadas en el CRM (con
+          invitados, enlace de Google Meet y recordatorios). También lee los
+          eventos de ese mismo calendario para mostrarlos en la agenda del CRM y
+          evitar que se agende dos veces el mismo horario, lista los nombres de
+          sus calendarios para que elija cuál sincronizar y lee su correo para
+          identificar la cuenta conectada. No se accede a ningún otro calendario
+          ni a otros datos de la cuenta de Google. Al desconectar, la
+          sincronización se detiene y se borran las credenciales de acceso; las
+          citas que ya se importaron se quedan en el CRM como parte de la agenda
+          de la empresa, hasta que la empresa las elimine o pida su eliminación
+          según la sección de conservación. El uso de la información
           obtenida de las APIs de Google cumple la{" "}
           <a
             href="https://developers.google.com/terms/api-services-user-data-policy"
