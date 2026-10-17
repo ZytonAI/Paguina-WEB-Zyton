@@ -41,7 +41,7 @@ export default function PreciosPage() {
             <PlanesPrecios />
 
             <p className="mt-12 text-center text-sm leading-relaxed text-muted">
-              Precios en pesos colombianos, antes de IVA. Al elegir un plan te
+              Precios finales en pesos colombianos: el servicio está excluido de IVA. Al elegir un plan te
               pedimos los datos de tu empresa y pasas al pago seguro con Wompi.
             </p>
           </div>
