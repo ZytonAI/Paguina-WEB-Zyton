@@ -11,7 +11,7 @@ export const legalEntity = {
 };
 
 // Fecha de la última revisión de los textos legales (ISO, para <time>).
-export const legalUpdatedAt = "2026-09-18";
+export const legalUpdatedAt = "2026-10-16";
 
 export const legalDocuments = [
   { href: "/privacidad", label: "Política de privacidad" },

@@ -130,9 +130,25 @@ export default function PrivacidadPage() {
           >
             Política de datos de usuario de los servicios de API de Google
           </a>
-          , incluidos los requisitos de uso limitado. La conexión se puede
-          revocar en cualquier momento desde el CRM o desde la configuración de
-          la cuenta de Google.
+          , incluidos los requisitos de uso limitado. Los datos obtenidos de
+          Google no se usan, ni en bruto ni agregados, anonimizados o derivados,
+          para crear, entrenar o mejorar modelos de inteligencia artificial
+          propios ni de terceros. La conexión se puede revocar en cualquier
+          momento desde el CRM o desde la configuración de la cuenta de Google.
+        </li>
+        <li>
+          <strong>Inteligencia artificial (OpenAI y Anthropic).</strong> Si la
+          empresa activa el asistente virtual, ZytonAI envía a OpenAI o a
+          Anthropic, a través de sus API comerciales, lo necesario para
+          redactar cada respuesta: la conversación en curso, las instrucciones
+          del asistente y el catálogo de la empresa. Las notas de voz se
+          transcriben con OpenAI. De Google Calendar el asistente solo recibe la
+          lista de horas libres de un día, nunca títulos, descripciones,
+          invitados ni correos de los eventos. Estos proveedores no usan los
+          datos recibidos por su API para entrenar sus modelos, y ZytonAI tiene
+          desactivada cualquier opción de compartir datos con ellos con ese
+          fin. ZytonAI no entrena modelos propios con datos de sus usuarios ni
+          de sus clientes.
         </li>
         <li>
           <strong>Meta (WhatsApp Business, Instagram, Facebook).</strong> Si la
