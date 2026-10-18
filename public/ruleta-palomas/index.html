@@ -64,7 +64,7 @@
   .cajas-txt{color:var(--muted);font-size:.9rem;text-align:right}
 
   /* Mapa del camion */
-  .caras{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;align-items:start}
+  .caras{display:flex;flex-wrap:wrap;gap:24px 20px;align-items:flex-start;padding-top:8px}
   .cara{border:4px solid #1f2a37;border-radius:10px;background:#e9e4d8;padding:10px;position:relative}
   .cara h3{position:absolute;top:-14px;left:12px;margin:0;background:#1f2a37;color:#fff;font-size:.8rem;padding:3px 10px;border-radius:6px;letter-spacing:.04em;text-transform:uppercase}
   .camion{display:grid;gap:5px;margin-top:8px}
@@ -214,7 +214,7 @@
 <div class="modal" id="modalImg">
   <div class="caja" id="mImgCaja">
     <img id="mImg" alt="Resultado del socio">
-    <p id="mImgError" hidden style="margin:0 0 16px">Este navegador no dejó crear la imagen.<br>Prueba abriendo el link en Chrome o en Safari actualizado, o haz una captura de pantalla del resultado.</p>
+    <p id="mImgError" hidden style="margin:0 0 16px">No se pudo crear la imagen.<br>Revisa la conexión a internet y vuelve a intentarlo.</p>
     <div class="row" style="justify-content:center">
       <button class="primary" id="mImgCompartir" hidden>Compartir</button>
       <button class="primary" id="mImgBajar">Descargar</button>
@@ -228,7 +228,8 @@
   "use strict";
   var CLAVE = "ruleta-palomas-v2";
   // Estructura fija del camion: dos caras, numeracion corrida
-  var CARAS = [{ nombre: "Cara 1", cols: 7, filas: 6 }, { nombre: "Cara 2", cols: 7, filas: 5 }];
+  // Misma estructura que CARAS en src/app/api/ruleta-palomas/imagen/route.tsx (7 de alto, el largo varia)
+  var CARAS = [{ nombre: "Cara 1", cols: 6, filas: 7 }, { nombre: "Cara 2", cols: 5, filas: 7 }];
   var COLORES = ["#1d4ed8","#b91c1c","#15803d","#a16207","#7c3aed","#0e7490","#c2410c","#be185d",
                  "#4d7c0f","#1e3a8a","#9f1239","#0f766e","#6d28d9","#92400e","#155e75","#3f6212"];
 
@@ -517,7 +518,7 @@
     var dueno = {}; estado.giros.forEach(function(g){ dueno[g.cajon] = g.socio; });
     var desde = 1;
     $("mapaCamion").innerHTML = estado.caras.map(function(c){
-      var html = "<div class='cara'><h3>" + esc(c.nombre) + "</h3><div class='camion' style='grid-template-columns:repeat(" + c.cols + ",minmax(0,1fr))'>";
+      var html = "<div class='cara' style='flex:" + c.cols + " 1 " + (c.cols * 46) + "px'><h3>" + esc(c.nombre) + "</h3><div class='camion' style='grid-template-columns:repeat(" + c.cols + ",minmax(0,1fr))'>";
       for (var n = desde; n < desde + c.cols * c.filas; n++){
         var i = dueno[n];
         html += i === undefined
@@ -532,98 +533,21 @@
   $("btnImprimir").addEventListener("click", function(){ window.print(); });
 
   // ---------- IMAGEN INDIVIDUAL ----------
-  function caja(c, x, y, w, h, r){
-    c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r);
-    c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath();
-  }
-  function ajustarTexto(c, txt, maxW, base, peso){
-    var fs = base; do { c.font = peso + " " + fs + "px system-ui, sans-serif"; fs -= 2; } while (c.measureText(txt).width > maxW && fs > 20);
-  }
-
-  function generarImagen(i, k){
-    k = k || 1;
-    var W = 1080, H = 1350, M = 70, s = estado.socios[i], col = color(i);
-    var suyos = cajonesDe(i).sort(function(a,b){ return a - b; });
-    var cv = document.createElement("canvas"); cv.width = Math.round(W * k); cv.height = Math.round(H * k);
-    var c = cv.getContext("2d"); if (!c) return null;
-    c.scale(k, k);
-
-    var g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#1f2a37"); g.addColorStop(1, "#0b1220");
-    c.fillStyle = g; c.fillRect(0, 0, W, H);
-    c.fillStyle = col; c.fillRect(0, 0, W, 14);
-
-    // Encabezado
-    c.textBaseline = "alphabetic"; c.textAlign = "left";
-    c.fillStyle = "rgba(255,255,255,.6)"; c.font = "700 30px system-ui, sans-serif";
-    c.fillText("🕊️  SORTEO DE CAJONES", M, 100);
-    c.fillStyle = "#fff"; c.font = "600 40px system-ui, sans-serif";
-    c.fillText(fechaTxt(), M, 150);
-
-    // Nombre del socio
-    c.fillStyle = col; caja(c, M, 230, 12, 110, 6); c.fill();
-    c.fillStyle = "#fff"; ajustarTexto(c, s.nombre, W - 2 * M - 40, 84, "900");
-    c.fillText(s.nombre, M + 36, 310);
-    c.fillStyle = "rgba(255,255,255,.7)"; c.font = "500 32px system-ui, sans-serif";
-    c.fillText(s.palomas + " palomas  ·  " + suyos.length + (suyos.length === 1 ? " cajón" : " cajones"), M + 36, 360);
-
-    // Fichas con los numeros: el tamano se ajusta a cuantos cajones tenga
-    var areaY = 410, areaH = 380, areaW = W - 2 * M, gap = 18, t = 174, porFila, filas;
-    do { t -= 4; porFila = Math.max(1, Math.floor((areaW + gap) / (t + gap))); filas = Math.ceil(suyos.length / porFila); }
-    while (filas * (t + gap) - gap > areaH && t > 40);
-    var enFila = Math.min(suyos.length, porFila);
-    var x0f = (W - (enFila * (t + gap) - gap)) / 2, y0f = areaY + (areaH - (filas * (t + gap) - gap)) / 2;
-    suyos.forEach(function(n, k){
-      var fx = x0f + (k % porFila) * (t + gap), fy = y0f + Math.floor(k / porFila) * (t + gap);
-      c.fillStyle = col; caja(c, fx, fy, t, t, t * 0.18); c.fill();
-      c.fillStyle = "#fff"; c.textAlign = "center"; c.textBaseline = "middle";
-      c.font = "900 " + Math.round(t * 0.46) + "px system-ui, sans-serif";
-      c.fillText(n, fx + t / 2, fy + t / 2 + 2);
-    });
-
-    // Mapa del camion con sus cajones resaltados
-    var mapaY = 830, mapaH = H - mapaY - 90, nc = estado.caras.length, sep = 40;
-    var anchoCara = (W - 2 * M - sep * (nc - 1)) / nc, desde = 1, mios = {};
-    suyos.forEach(function(n){ mios[n] = true; });
-    estado.caras.forEach(function(cara, k){
-      var x0 = M + k * (anchoCara + sep), cel = Math.min(anchoCara / cara.cols, (mapaH - 50) / cara.filas), p = Math.max(2, cel * 0.08);
-      c.textAlign = "left"; c.textBaseline = "alphabetic";
-      c.fillStyle = "rgba(255,255,255,.75)"; c.font = "700 26px system-ui, sans-serif";
-      c.fillText(cara.nombre, x0, mapaY + 26);
-      for (var f = 0; f < cara.filas; f++) for (var cc = 0; cc < cara.cols; cc++){
-        var n = desde + f * cara.cols + cc, x = x0 + cc * cel, y = mapaY + 46 + f * cel;
-        caja(c, x + p / 2, y + p / 2, cel - p, cel - p, 6);
-        if (mios[n]){ c.fillStyle = col; c.fill(); c.fillStyle = "#fff"; }
-        else { c.strokeStyle = "rgba(255,255,255,.18)"; c.lineWidth = 2; c.stroke(); c.fillStyle = "rgba(255,255,255,.3)"; }
-        c.textAlign = "center"; c.textBaseline = "middle";
-        c.font = (mios[n] ? "800 " : "500 ") + Math.round(cel * 0.36) + "px system-ui, sans-serif";
-        c.fillText(n, x + cel / 2, y + cel / 2 + 1);
-      }
-      desde += cara.cols * cara.filas;
-    });
-
-    c.textAlign = "center"; c.textBaseline = "alphabetic";
-    c.fillStyle = "rgba(255,255,255,.35)"; c.font = "500 24px system-ui, sans-serif";
-    c.fillText("Ruleta de Palomas", W / 2, H - 36);
-    return cv;
+  // La dibuja el servidor (src/app/api/ruleta-palomas/imagen): Safari no deja leer un canvas.
+  function urlImagen(i){
+    var s = estado.socios[i];
+    return "/api/ruleta-palomas/imagen?" + new URLSearchParams({
+      n: s.nombre, p: String(s.palomas), c: cajonesDe(i).join(","), f: fechaTxt(), col: color(i).slice(1)
+    }).toString();
   }
 
   function nombreArchivo(i){
     return "cajones-" + estado.socios[i].nombre.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") + ".png";
   }
-  // Genera el PNG como archivo (Blob). Si el navegador no puede (memoria del
-  // telefono, bloqueo de privacidad) reintenta mas chico; cb(null) si nada sirve.
   function crearImagen(i, cb){
-    var escalas = [1, 0.7, 0.5];
-    (function intento(n){
-      if (n >= escalas.length) return cb(null);
-      var cv = null;
-      try { cv = generarImagen(i, escalas[n]); } catch(e){ cv = null; }
-      if (!cv || !cv.toBlob) return intento(n + 1);
-      cv.toBlob(function(blob){
-        cv.width = cv.height = 0; // liberar memoria del lienzo
-        if (blob && blob.size > 2000) cb(blob); else intento(n + 1);
-      }, "image/png");
-    })(0);
+    fetch(urlImagen(i)).then(function(r){ return r.ok ? r.blob() : null; })
+      .then(function(blob){ cb(blob && blob.size > 2000 ? blob : null); })
+      .catch(function(){ cb(null); });
   }
   function bajar(blob, nombre){
     var url = URL.createObjectURL(blob), a = document.createElement("a");
@@ -636,9 +560,9 @@
   $("tablaResultados").addEventListener("click", function(e){
     var b = e.target.closest("button[data-img]"); if (!b) return;
     var i = +b.dataset.img;
-    b.disabled = true;
+    b.disabled = true; b.textContent = "Creando…";
     crearImagen(i, function(blob){
-      b.disabled = false;
+      b.disabled = false; b.textContent = "📷 Imagen";
       if (urlPrevia){ URL.revokeObjectURL(urlPrevia); urlPrevia = null; }
       imgActual = blob ? { i: i, blob: blob } : null;
       $("mImg").hidden = !blob; $("mImgError").hidden = !!blob;
@@ -660,7 +584,7 @@
   $("btnTodas").addEventListener("click", function(){
     var lista = estado.socios.map(function(_, i){ return i; }).filter(function(i){ return cajonesDe(i).length; }), fallos = 0;
     (function sig(k){
-      if (k >= lista.length){ if (fallos) alert("Este navegador no dejó crear " + fallos + " imagen(es). Prueba con Chrome o Safari actualizado."); return; }
+      if (k >= lista.length){ if (fallos) alert("No se pudieron crear " + fallos + " imagen(es). Revisa la conexión a internet y vuelve a intentarlo."); return; }
       crearImagen(lista[k], function(blob){
         if (blob) bajar(blob, nombreArchivo(lista[k])); else fallos++;
         setTimeout(function(){ sig(k + 1); }, 500);
