@@ -12,6 +12,12 @@ const CARAS = [
 ];
 const TOTAL = CARAS.reduce((a, c) => a + c.cols * c.filas, 0);
 
+// Colores del escudo del club
+const NAVY = "#0f2557";
+const ORO = "#c9a24a";
+const ORO_CLARO = "#e8cd85";
+const ORO_OSC = "#9c7a2c";
+
 const W = 1080;
 const H = 1350;
 const M = 70;
@@ -26,10 +32,12 @@ export async function GET(req: Request) {
     .filter((n) => n >= 1 && n <= TOTAL)
     .sort((a, b) => a - b);
 
-  const [medium, black] = await Promise.all([
+  const [medium, black, logo] = await Promise.all([
     readFile(join(process.cwd(), "assets/fuentes/Geist-Medium.ttf")),
     readFile(join(process.cwd(), "assets/fuentes/Geist-Black.ttf")),
+    readFile(join(process.cwd(), "assets/logo-club.png")),
   ]);
+  const logoSrc = `data:image/png;base64,${logo.toString("base64")}`;
 
   // Fichas: el tamano se ajusta a cuantos cajones tenga
   const areaW = W - 2 * M;
@@ -66,20 +74,27 @@ export async function GET(req: Request) {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          background: "linear-gradient(180deg, #1f2a37 0%, #0b1220 100%)",
+          background: `linear-gradient(180deg, ${NAVY} 0%, #081633 100%)`,
           color: "#fff",
           fontFamily: "Geist",
           position: "relative",
         }}
       >
-        <div style={{ height: 14, width: "100%", background: color, display: "flex" }} />
+        <div style={{ height: 14, width: "100%", background: `linear-gradient(90deg, ${ORO_OSC}, ${ORO_CLARO}, ${ORO_OSC})`, display: "flex" }} />
+        <img
+          src={logoSrc}
+          width={170}
+          height={170}
+          style={{ position: "absolute", top: 46, right: M, borderRadius: 85, border: `4px solid ${ORO}` }}
+        />
         <div style={{ display: "flex", flexDirection: "column", padding: `50px ${M}px 0` }}>
-          <div style={{ fontSize: 30, fontWeight: 500, color: "rgba(255,255,255,.6)", letterSpacing: 2 }}>SORTEO DE CAJONES</div>
+          <div style={{ fontSize: 26, fontWeight: 500, color: ORO_CLARO, letterSpacing: 3 }}>ASOCIACIÓN DE AMIGOS COLOMBÓFILOS</div>
+          <div style={{ fontSize: 30, fontWeight: 500, color: "rgba(255,255,255,.6)", letterSpacing: 2, marginTop: 14 }}>SORTEO DE CAJONES</div>
           <div style={{ fontSize: 40, fontWeight: 500, marginTop: 6 }}>{fecha}</div>
 
           <div style={{ display: "flex", marginTop: 40, alignItems: "stretch" }}>
             <div style={{ width: 12, background: color, borderRadius: 6, display: "flex" }} />
-            <div style={{ display: "flex", flexDirection: "column", marginLeft: 28 }}>
+            <div style={{ display: "flex", flexDirection: "column", marginLeft: 28, maxWidth: W - 2 * M - 250 }}>
               <div style={{ fontSize: tamNombre, fontWeight: 900, lineHeight: 1.05 }}>{nombre}</div>
               <div style={{ fontSize: 32, fontWeight: 500, color: "rgba(255,255,255,.7)", marginTop: 10 }}>
                 {`${palomas} palomas  ·  ${cajones.length} ${cajones.length === 1 ? "cajón" : "cajones"}`}
@@ -125,12 +140,12 @@ export async function GET(req: Request) {
         <div style={{ position: "absolute", top: mapaY, left: M, width: areaW, display: "flex", justifyContent: "center", gap: sep }}>
           {caras.map((c) => (
             <div key={c.nombre} style={{ display: "flex", flexDirection: "column" }}>
-              <div style={{ fontSize: 26, fontWeight: 500, color: "rgba(255,255,255,.75)", marginBottom: 12 }}>{c.nombre}</div>
+              <div style={{ fontSize: 26, fontWeight: 500, color: ORO_CLARO, marginBottom: 12, letterSpacing: 2 }}>{c.nombre.toUpperCase()}</div>
               <div
                 style={{
                   display: "flex",
                   flexDirection: "column",
-                  border: "3px solid rgba(255,255,255,.35)",
+                  border: `3px solid ${ORO}`,
                   borderRadius: 10,
                   padding: 4,
                 }}
@@ -177,10 +192,10 @@ export async function GET(req: Request) {
             justifyContent: "center",
             fontSize: 24,
             fontWeight: 500,
-            color: "rgba(255,255,255,.35)",
+            color: "rgba(232,205,133,.6)",
           }}
         >
-          Ruleta de Palomas
+          Ruleta de Palomas  ·  Bogotá - Colombia
         </div>
       </div>
     ),
