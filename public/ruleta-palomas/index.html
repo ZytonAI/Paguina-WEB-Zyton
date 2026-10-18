@@ -296,12 +296,11 @@
   var COLORES = ["#1d4ed8","#b91c1c","#15803d","#a16207","#7c3aed","#0e7490","#c2410c","#be185d",
                  "#4d7c0f","#1e3a8a","#9f1239","#0f766e","#6d28d9","#92400e","#155e75","#3f6212"];
 
-  var estado = cargar() || { porCajon: 20, socios: [], fase: "config", giros: [], turno: 0, fecha: null, v: 3 };
-  if (estado.v !== 3){
-    // estado de una version anterior: pasar al default de 20 si aun no se sorteo nada
-    if (!estado.giros.length) estado.porCajon = 20;
-    delete estado.carrera; delete estado.caras; estado.v = 3;
-  }
+  var POR_CAJON = 20;
+  var estado = cargar() || { porCajon: POR_CAJON, socios: [], fase: "config", giros: [], turno: 0, fecha: null, v: 3 };
+  if (estado.v !== 3){ delete estado.carrera; delete estado.caras; estado.v = 3; }
+  // Cada vez que se abre sin un sorteo empezado, vuelve al default de 20 palomas por cajon
+  if (!estado.giros.length) estado.porCajon = POR_CAJON;
   estado.caras = CARAS;
   // giros: [{socio: idx, cajon: n}]
 
@@ -694,7 +693,7 @@
 
   $("btnNuevo").addEventListener("click", function(){
     if (estado.socios.length && !confirm("¿Empezar un sorteo nuevo?\n\nSe borran los cajones sorteados y se mantienen los mismos socios.")) return;
-    estado.giros = []; estado.turno = 0; estado.fecha = null; estado.fase = "config"; guardar(); pintar();
+    estado.giros = []; estado.turno = 0; estado.fecha = null; estado.fase = "config"; estado.porCajon = POR_CAJON; guardar(); pintar();
   });
 
   function pintar(){
