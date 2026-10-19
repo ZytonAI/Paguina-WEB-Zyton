@@ -215,7 +215,7 @@ export async function GET(req: Request) {
             color: "rgba(232,205,133,.6)",
           }}
         >
-          Ruleta de Palomas  ·  Bogotá - Colombia
+          Sorteo Cajas Camión  ·  Bogotá - Colombia
         </div>
       </div>
     ),
