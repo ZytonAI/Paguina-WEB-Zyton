@@ -27,6 +27,7 @@ export async function GET(req: Request) {
   const nombre = (q.get("n") || "Socio").slice(0, 60);
   const palomas = Math.max(0, Math.min(99999, parseInt(q.get("p") || "0", 10) || 0));
   const fecha = (q.get("f") || "").slice(0, 40);
+  const categoria = (q.get("cat") || "").slice(0, 30);
   const color = /^[0-9a-fA-F]{6}$/.test(q.get("col") || "") ? `#${q.get("col")}` : "#1d4ed8";
   const cajones = [...new Set((q.get("c") || "").split(",").map((x) => parseInt(x, 10)))]
     .filter((n) => n >= 1 && n <= TOTAL)
@@ -89,8 +90,27 @@ export async function GET(req: Request) {
         />
         <div style={{ display: "flex", flexDirection: "column", padding: `50px ${M}px 0` }}>
           <div style={{ fontSize: 26, fontWeight: 500, color: ORO_CLARO, letterSpacing: 3 }}>ASOCIACIÓN DE AMIGOS COLOMBÓFILOS</div>
-          <div style={{ fontSize: 30, fontWeight: 500, color: "rgba(255,255,255,.6)", letterSpacing: 2, marginTop: 14 }}>SORTEO DE CAJONES</div>
-          <div style={{ fontSize: 40, fontWeight: 500, marginTop: 6 }}>{fecha}</div>
+          <div style={{ fontSize: 24, fontWeight: 500, color: "rgba(255,255,255,.6)", letterSpacing: 1, marginTop: 14 }}>
+            {`SORTEO DE CAJONES  ·  ${fecha.toUpperCase()}`}
+          </div>
+          {/* La categoria va grande: cada categoria se sortea aparte y las imagenes no se deben confundir */}
+          <div style={{ display: "flex", marginTop: 12 }}>
+            <div
+              style={{
+                display: "flex",
+                background: `linear-gradient(90deg, ${ORO_CLARO}, ${ORO})`,
+                color: NAVY,
+                fontSize: 34,
+                fontWeight: 900,
+                padding: "6px 22px",
+                borderRadius: 999,
+                letterSpacing: 1,
+                maxWidth: W - 2 * M - 220,
+              }}
+            >
+              {`CATEGORÍA ${categoria.toUpperCase()}`}
+            </div>
+          </div>
 
           <div style={{ display: "flex", marginTop: 40, alignItems: "stretch" }}>
             <div style={{ width: 12, background: color, borderRadius: 6, display: "flex" }} />

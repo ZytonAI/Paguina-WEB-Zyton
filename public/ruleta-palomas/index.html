@@ -57,7 +57,11 @@
   tbody tr:hover{background:#fcfaf5}
   td input{padding:8px 10px}
   .num{width:90px}
-  .x{background:none;color:var(--bad);padding:6px 10px;font-size:1.1rem}
+  tr.fuera td{color:#a39e90}
+  .formula{font-size:1.05rem;margin:0 0 4px;color:var(--navy)}
+  .formula b{font-size:1.25rem}
+  .turno .cat{display:inline-block;margin-bottom:8px;background:var(--gold);color:var(--navy-3);border-radius:999px;padding:3px 14px;
+    font-weight:800;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase}
   .resumen{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
   .resumen span{background:#f6f1e4;border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:700;font-size:.9rem;color:var(--navy)}
   .resumen span.bad{color:var(--bad);background:#fdecec;border-color:#f5c9c9}
@@ -155,32 +159,28 @@
   <!-- PASO 1: CONFIGURACION -->
   <section id="vistaConfig">
     <div class="card">
-      <h2>Camión</h2>
-      <div class="row">
-        <div style="flex:0 1 220px"><label for="porCajon">Palomas por cajón</label><input id="porCajon" type="number" min="1" max="200"></div>
-      </div>
-      <p class="hint" id="txtTotal"></p>
-      <p class="hint">Con las palomas por cajón se calcula cuántos cajones necesita cada socio. Se puede cambiar a mano en la tabla.</p>
-    </div>
-
-    <div class="card">
       <h2>Socios</h2>
-      <form id="formSocio" class="row">
-        <div style="flex:2 1 200px"><label for="nNombre">Nombre</label><input id="nNombre" autocomplete="off" placeholder="Ej. Juan Pérez"></div>
-        <div><label for="nPalomas">Palomas</label><input id="nPalomas" type="number" min="1"></div>
-        <div><label for="nCajas">Cajones (opcional)</label><input id="nCajas" type="number" min="1" placeholder="auto"></div>
-        <div style="flex:0 0 auto"><button class="primary" type="submit">Agregar</button></div>
-      </form>
-
-      <div style="overflow-x:auto;margin-top:16px">
+      <div class="row">
+        <div style="flex:0 1 340px"><label for="categoria">Categoría</label>
+          <input id="categoria" list="listaCategorias" autocomplete="off" maxlength="30" placeholder="Ej. Adultos, Pichones…">
+          <datalist id="listaCategorias"></datalist></div>
+      </div>
+      <p class="hint">Escribe las palomas de cada socio en esta categoría. Si un socio no participa, deja la casilla vacía.</p>
+      <div style="overflow-x:auto;margin-top:12px">
         <table>
-          <thead><tr><th>#</th><th>Socio</th><th>Palomas</th><th>Cajones</th><th></th></tr></thead>
+          <thead><tr><th>#</th><th>Socio</th><th>Palomas</th><th>Cajones</th></tr></thead>
           <tbody id="tablaSocios"></tbody>
         </table>
       </div>
+    </div>
+
+    <div class="card">
+      <h2>Camión</h2>
+      <p class="formula" id="txtFormula"></p>
+      <p class="hint" id="txtTotal"></p>
       <div class="resumen" id="resumen"></div>
+      <p class="hint">El orden de los turnos se sortea al empezar.</p>
       <div class="acciones">
-        <button id="btnMezclar" type="button">Mezclar orden de socios</button>
         <button id="btnEmpezar" class="primary" type="button">Empezar sorteo ▶</button>
       </div>
     </div>
@@ -191,6 +191,7 @@
     <div class="juego">
       <div class="card mesa">
         <div class="turno">
+          <div class="cat" id="txtCat"></div>
           <div class="giro" id="txtGiro"></div>
           <div class="quien" id="txtQuien"></div>
           <div class="vuelta" id="txtCentro"></div>
@@ -296,11 +297,17 @@
   var COLORES = ["#1d4ed8","#b91c1c","#15803d","#a16207","#7c3aed","#0e7490","#c2410c","#be185d",
                  "#4d7c0f","#1e3a8a","#9f1239","#0f766e","#6d28d9","#92400e","#155e75","#3f6212"];
 
-  var POR_CAJON = 20;
-  var estado = cargar() || { porCajon: POR_CAJON, socios: [], fase: "config", giros: [], turno: 0, fecha: null, v: 3 };
-  if (estado.v !== 3){ delete estado.carrera; delete estado.caras; estado.v = 3; }
-  // Cada vez que se abre sin un sorteo empezado, vuelve al default de 20 palomas por cajon
-  if (!estado.giros.length) estado.porCajon = POR_CAJON;
+  // Socios fijos del club (los 13 del programa del club + Carlos Montes y Mauricio Castilla)
+  var SOCIOS = ["Carlos Montes", "Mauricio Castilla", "Gabriel Ferro", "Juan Antonio Barba", "Guillermo Gutiérrez",
+    "Roberto Castilla", "Wilmar Ochoa", "Alfredo Ferro", "Familia Ferro", "Los Rodríguez", "Palomar MD",
+    "Felipe Sarmiento", "Hermanos Arizabaleta", "Johan López", "Pedro Amezquita"];
+
+  // estado.palomas: {nombre: palomas} de la categoria en curso.
+  // estado.socios: los que participan, en el orden sorteado al empezar (giros apunta a su indice).
+  var estado = cargar();
+  if (!estado || estado.v !== 4){
+    estado = { v: 4, categoria: "", palomas: {}, categorias: [], socios: [], porCajon: 0, fase: "config", giros: [], turno: 0, fecha: null };
+  }
   estado.caras = CARAS;
   // giros: [{socio: idx, cajon: n}]
 
@@ -311,9 +318,19 @@
   function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]; }); }
   function color(i){ return COLORES[i % COLORES.length]; }
   function totalCajones(){ return estado.caras.reduce(function(a,c){ return a + c.cols * c.filas; }, 0); }
-  function cajasAuto(palomas){ return Math.max(1, Math.ceil(palomas / Math.max(1, estado.porCajon))); }
-  function cajasDe(s){ return s.cajasManual ? s.cajas : cajasAuto(s.palomas); }
-  function totalPedidos(){ return estado.socios.reduce(function(a,s){ return a + cajasDe(s); }, 0); }
+  function palomasDe(nombre){ return estado.palomas[nombre] || 0; }
+  function totalPalomas(){ return SOCIOS.reduce(function(a,n){ return a + palomasDe(n); }, 0); }
+  function cajasPara(palomas, k){ return palomas > 0 && k > 0 ? Math.ceil(palomas / k) : 0; }
+  function cajasCon(k){ return SOCIOS.reduce(function(a,n){ return a + cajasPara(palomasDe(n), k); }, 0); }
+  // Palomas por cajon = total de palomas / cajones del camion, redondeado hacia arriba.
+  // Si al repartir por socio (cada uno redondea hacia arriba) no alcanzan los cajones, sube de a uno.
+  function calcularPorCajon(){
+    var T = totalPalomas(), C = totalCajones();
+    if (!T) return 0;
+    var k = Math.max(1, Math.ceil(T / C));
+    while (cajasCon(k) > C) k++;
+    return k;
+  }
   function cajonesDe(i){ return estado.giros.filter(function(g){ return g.socio === i; }).map(function(g){ return g.cajon; }); }
   function pendientes(i){ return estado.socios[i].cajas - cajonesDe(i).length; }
   // Cara a la que pertenece un cajon (numeracion corrida: cara 1 primero)
@@ -330,6 +347,7 @@
     var d = estado.fecha ? new Date(estado.fecha) : new Date();
     return d.toLocaleDateString("es", { day: "numeric", month: "long", year: "numeric" });
   }
+  function decimal(x){ return (Math.round(x * 100) / 100).toLocaleString("es"); }
 
   // Numero aleatorio justo (sin sesgo de modulo)
   function azar(n){
@@ -339,83 +357,67 @@
   }
 
   // ---------- CONFIGURACION ----------
-  $("porCajon").addEventListener("change", function(){
-    var v = parseInt(this.value, 10); if (v > 0) estado.porCajon = v; guardar(); pintarConfig();
-  });
-
-  $("formSocio").addEventListener("submit", function(e){
-    e.preventDefault();
-    var nombre = $("nNombre").value.trim(), palomas = parseInt($("nPalomas").value, 10), cajas = parseInt($("nCajas").value, 10);
-    if (!nombre){ $("nNombre").focus(); return; }
-    if (!(palomas > 0)){ $("nPalomas").focus(); return; }
-    estado.socios.push({ nombre: nombre, palomas: palomas, cajas: cajas > 0 ? cajas : cajasAuto(palomas), cajasManual: cajas > 0 });
-    this.reset(); $("nNombre").focus();
-    guardar(); pintarConfig();
-  });
+  $("categoria").addEventListener("input", function(){ estado.categoria = this.value; guardar(); pintarConfig(); });
 
   $("tablaSocios").addEventListener("change", function(e){
-    var t = e.target, s = estado.socios[+t.dataset.i], campo = t.dataset.campo;
-    if (!s) return;
-    if (campo === "nombre"){ s.nombre = t.value.trim() || s.nombre; }
-    if (campo === "palomas"){ var p = parseInt(t.value, 10); if (p > 0) s.palomas = p; }
-    if (campo === "cajas"){
-      var c = parseInt(t.value, 10);
-      if (t.value === "" || c === cajasAuto(s.palomas)) { s.cajasManual = false; }
-      else if (c > 0) { s.cajasManual = true; s.cajas = c; }
-    }
-    guardar(); pintarConfig();
-  });
-  $("tablaSocios").addEventListener("click", function(e){
-    var b = e.target.closest("button[data-borrar]"); if (!b) return;
-    var i = +b.dataset.borrar;
-    if (confirm("¿Quitar a " + estado.socios[i].nombre + "?")){ estado.socios.splice(i, 1); guardar(); pintarConfig(); }
-  });
-
-  $("btnMezclar").addEventListener("click", function(){
-    var a = estado.socios;
-    for (var i = a.length - 1; i > 0; i--){ var j = azar(i + 1), t = a[i]; a[i] = a[j]; a[j] = t; }
+    var t = e.target, nombre = t.dataset.nombre; if (!nombre) return;
+    var p = parseInt(t.value, 10);
+    if (p > 0) estado.palomas[nombre] = Math.min(p, 9999); else delete estado.palomas[nombre];
     guardar(); pintarConfig();
   });
 
   $("btnEmpezar").addEventListener("click", function(){
-    if (!estado.socios.length || totalPedidos() > totalCajones()) return;
-    var nuevo = estado.giros.length === 0;
-    estado.socios.forEach(function(s){ s.cajas = cajasDe(s); });
-    if (nuevo){ estado.turno = 0; estado.fecha = Date.now(); }
+    var cat = (estado.categoria || "").trim();
+    if (!estado.giros.length){
+      var k = calcularPorCajon();
+      if (!k || !cat || cajasCon(k) > totalCajones()) return;
+      // Los que participan, en el orden que sale sorteado
+      var a = SOCIOS.filter(function(n){ return palomasDe(n) > 0; })
+        .map(function(n){ return { nombre: n, palomas: palomasDe(n), cajas: cajasPara(palomasDe(n), k) }; });
+      for (var i = a.length - 1; i > 0; i--){ var j = azar(i + 1), x = a[i]; a[i] = a[j]; a[j] = x; }
+      estado.socios = a; estado.porCajon = k; estado.categoria = cat;
+      estado.turno = 0; estado.fecha = Date.now();
+      estado.categorias = [cat].concat((estado.categorias || []).filter(function(c){ return c.toLowerCase() !== cat.toLowerCase(); })).slice(0, 12);
+    }
     estado.fase = "juego"; guardar(); pintar();
     var t = turnoActual();
     if (t) avisarTurno(t.socio, null);
   });
 
   function pintarConfig(){
-    var bloqueado = estado.giros.length > 0;
-    $("porCajon").value = estado.porCajon;
+    var bloqueado = estado.giros.length > 0, k = calcularPorCajon(), T = totalPalomas(), C = totalCajones();
+    var cat = $("categoria");
+    if (cat.value !== (estado.categoria || "")) cat.value = estado.categoria || "";
+    cat.disabled = bloqueado;
+    $("listaCategorias").innerHTML = (estado.categorias || []).map(function(c){ return "<option value='" + esc(c) + "'>"; }).join("");
+
+    $("tablaSocios").innerHTML = SOCIOS.map(function(n, i){
+      var p = palomasDe(n), c = cajasPara(p, k);
+      return "<tr class='" + (p ? "" : "fuera") + "'><td>" + (i + 1) + "</td><td>" + esc(n) + "</td>" +
+        "<td><input class='num' type='number' min='0' inputmode='numeric' data-nombre='" + esc(n) + "' value='" + (p || "") + "'" + (bloqueado ? " disabled" : "") + "></td>" +
+        "<td><b>" + (c || "—") + "</b></td></tr>";
+    }).join("");
+
     var desde = 1, partes = estado.caras.map(function(c){
       var r = c.nombre + ": " + desde + "–" + (desde + c.cols * c.filas - 1); desde += c.cols * c.filas; return r;
     });
-    $("txtTotal").innerHTML = "Total en el camión: <b>" + totalCajones() + " cajones</b> (" + esc(partes.join(" · ")) + ")";
+    $("txtTotal").innerHTML = "Total en el camión: <b>" + C + " cajones</b> (" + esc(partes.join(" · ")) + ")";
+    if (!T) $("txtFormula").textContent = "Escribe las palomas de los socios para calcular cuántas van por cajón.";
+    else {
+      var base = Math.ceil(T / C);
+      $("txtFormula").innerHTML = T + " palomas ÷ " + C + " cajones = " + decimal(T / C) + " → <b>" + k + " palomas por cajón</b>" +
+        (k > base ? "<br><span class='hint'>Con " + base + " por cajón no alcanzaban los cajones al repartir por socio, por eso son " + k + ".</span>" : "");
+    }
 
-    $("tablaSocios").innerHTML = estado.socios.map(function(s, i){
-      var d = bloqueado ? " disabled" : "";
-      return "<tr><td><span class='chip' style='background:" + color(i) + "'></span>" + (i + 1) + "</td>" +
-        "<td><input data-i='" + i + "' data-campo='nombre' value='" + esc(s.nombre) + "'" + d + "></td>" +
-        "<td><input class='num' type='number' min='1' data-i='" + i + "' data-campo='palomas' value='" + s.palomas + "'" + d + "></td>" +
-        "<td><input class='num' type='number' min='1' data-i='" + i + "' data-campo='cajas' value='" + cajasDe(s) + "'" + d + "></td>" +
-        "<td>" + (bloqueado ? "" : "<button class='x' title='Quitar' data-borrar='" + i + "'>✕</button>") + "</td></tr>";
-    }).join("") || "<tr><td colspan='5' class='hint'>Todavía no hay socios.</td></tr>";
-
-    var pedidos = totalPedidos(), libres = totalCajones() - pedidos;
-    var palomas = estado.socios.reduce(function(a,s){ return a + s.palomas; }, 0);
+    var usados = cajasCon(k), participan = SOCIOS.filter(function(n){ return palomasDe(n) > 0; }).length;
+    var falta = !(estado.categoria || "").trim();
     $("resumen").innerHTML =
-      "<span>Socios: " + estado.socios.length + "</span>" +
-      "<span>Palomas: " + palomas + "</span>" +
-      "<span>Cajones a sortear: " + pedidos + " de " + totalCajones() + "</span>" +
-      (libres < 0 ? "<span class='bad'>Faltan " + (-libres) + " cajones en el camión</span>" : "<span class='ok'>Quedan libres: " + libres + "</span>");
-    $("btnEmpezar").disabled = !estado.socios.length || libres < 0;
+      "<span>Socios: " + participan + "</span>" +
+      "<span>Palomas: " + T + "</span>" +
+      "<span>Cajones a sortear: " + usados + " de " + C + "</span>" +
+      (falta && !bloqueado ? "<span class='bad'>Falta la categoría</span>" : "");
+    $("btnEmpezar").disabled = !bloqueado && (!T || falta);
     $("btnEmpezar").textContent = bloqueado ? "Seguir sorteo ▶" : "Empezar sorteo ▶";
-    $("btnMezclar").disabled = bloqueado;
-    $("porCajon").disabled = bloqueado;
-    $("formSocio").querySelectorAll("input,button").forEach(function(el){ el.disabled = bloqueado; });
   }
 
   // ---------- TURNOS ----------
@@ -577,6 +579,7 @@
   function pintarJuego(){
     var t = turnoActual();
     dibujarRueda();
+    $("txtCat").textContent = "Categoría " + estado.categoria;
     if (t){
       $("txtGiro").textContent = "Turno de";
       $("txtQuien").textContent = estado.socios[t.socio].nombre;
@@ -607,7 +610,7 @@
     var hay = estado.giros.length > 0;
     $("vistaResultados").hidden = !hay;
     if (!hay) return;
-    $("tituloResultados").textContent = turnoActual() ? "Resultado parcial" : "Resultado del sorteo";
+    $("tituloResultados").textContent = (turnoActual() ? "Resultado parcial" : "Resultado del sorteo") + " · " + estado.categoria;
     $("tablaResultados").innerHTML = estado.socios.map(function(s, i){
       var suyos = cajonesDe(i).sort(function(a,b){ return a - b; });
       return "<tr><td><span class='chip' style='background:" + color(i) + "'></span>" + esc(s.nombre) + "</td><td>" + s.palomas +
@@ -636,13 +639,12 @@
   function urlImagen(i){
     var s = estado.socios[i];
     return "/api/ruleta-palomas/imagen?" + new URLSearchParams({
-      n: s.nombre, p: String(s.palomas), c: cajonesDe(i).join(","), f: fechaTxt(), col: color(i).slice(1)
+      n: s.nombre, p: String(s.palomas), c: cajonesDe(i).join(","), f: fechaTxt(), col: color(i).slice(1), cat: estado.categoria
     }).toString();
   }
 
-  function nombreArchivo(i){
-    return "cajones-" + estado.socios[i].nombre.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") + ".png";
-  }
+  function slug(s){ return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
+  function nombreArchivo(i){ return "cajones-" + slug(estado.categoria) + "-" + slug(estado.socios[i].nombre) + ".png"; }
   function crearImagen(i, cb){
     fetch(urlImagen(i)).then(function(r){ return r.ok ? r.blob() : null; })
       .then(function(blob){ cb(blob && blob.size > 2000 ? blob : null); })
@@ -677,7 +679,7 @@
     if (!imgActual) return;
     var nombre = nombreArchivo(imgActual.i), socio = estado.socios[imgActual.i].nombre;
     var f = new File([imgActual.blob], nombre, { type: "image/png" });
-    if (navigator.canShare && navigator.canShare({ files: [f] })) navigator.share({ files: [f], title: "Cajones de " + socio }).catch(function(){});
+    if (navigator.canShare && navigator.canShare({ files: [f] })) navigator.share({ files: [f], title: "Cajones de " + socio + " · " + estado.categoria }).catch(function(){});
     else bajar(imgActual.blob, nombre);
   });
   $("btnTodas").addEventListener("click", function(){
@@ -692,8 +694,9 @@
   });
 
   $("btnNuevo").addEventListener("click", function(){
-    if (estado.socios.length && !confirm("¿Empezar un sorteo nuevo?\n\nSe borran los cajones sorteados y se mantienen los mismos socios.")) return;
-    estado.giros = []; estado.turno = 0; estado.fecha = null; estado.fase = "config"; estado.porCajon = POR_CAJON; guardar(); pintar();
+    if (!confirm("¿Empezar un sorteo nuevo (otra categoría)?\n\nSe borran los cajones sorteados, la categoría y las palomas escritas.")) return;
+    estado.giros = []; estado.socios = []; estado.palomas = {}; estado.categoria = ""; estado.porCajon = 0;
+    estado.turno = 0; estado.fecha = null; estado.fase = "config"; guardar(); pintar();
   });
 
   function pintar(){
