@@ -167,7 +167,7 @@ body {
   color: var(--foreground);
 }
 
-/* --- Portada nueva (/nueva) --------------------------------------------- */
+/* --- Portada (components/portada) ------------------------------------- */
 
 /* Franja que se desplaza sola. El contenido va duplicado dentro de la pista,
    así que moverla la mitad de su ancho da un bucle sin salto. */

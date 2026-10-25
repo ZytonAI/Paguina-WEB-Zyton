@@ -32,14 +32,14 @@ iCloud no lo sincronice).
 
 ```
 src/app/
-  page.tsx                 inicio (Hero, Services, Sectors, Differentiators, FAQ)
+  page.tsx                 inicio: componentes en src/components/portada/ (sin precios: viven en /precios)
   precios/page.tsx         los tres planes: el texto y los precios están aquí
   blog/ blog/[slug]/       posts en src/lib/posts.ts
   contacto/ faq/
   privacidad/ terminos/ eliminacion-de-datos/   texto en src/lib/legal.ts
   api/crm-login/route.ts   el puente al CRM (ver abajo)
   sitemap.ts robots.ts manifest.ts              canonical: https://www.zytonai.com
-src/components/            Header (botón «Ingresar a CRM»), CrmLoginModal, Hero, Footer…
+src/components/            Header (botón «Ingresar a CRM»), CrmLoginModal, Footer, FAQ, portada/…
 src/lib/crm.ts             configuración del puente (lee las env vars)
 ```
 

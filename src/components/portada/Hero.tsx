@@ -22,7 +22,7 @@ import GlowBackground from "../GlowBackground";
 const PASOS = 5;
 const DURACION_PASO = 1900;
 
-export default function HeroNuevo() {
+export default function Hero() {
   const [paso, setPaso] = useState(0);
 
   useEffect(() => {
