@@ -60,7 +60,7 @@ export const posts: BlogPost[] = [
       },
       {
         type: "p",
-        text: "La automatización con inteligencia artificial resuelve esto sin reemplazar a tu equipo: responde al instante, califica al lead y solo escala a una persona cuando la conversación realmente lo requiere. El resultado es que cada contacto recibe atención inmediata, sin que eso implique contratar más gente ni cambiar de herramientas.",
+        text: "La automatización con inteligencia artificial resuelve esto sin reemplazar a tu equipo: responde al instante, registra al interesado como lead y solo escala a una persona cuando la conversación realmente lo requiere. El resultado es que cada contacto recibe atención inmediata, sin que eso implique contratar más gente ni cambiar de herramientas.",
       },
       {
         type: "p",
@@ -70,15 +70,15 @@ export const posts: BlogPost[] = [
   },
   {
     slug: "automatizar-seguimiento-de-leads-sin-cambiar-tu-crm",
-    title: "Cómo automatizar el seguimiento de leads sin cambiar tu CRM",
+    title: "Cómo automatizar el seguimiento de leads sin cambiar tu forma de trabajar",
     description:
-      "La automatización con IA no requiere migrar tus herramientas. Así es como se conecta a lo que ya usas para dar seguimiento automático a cada cliente potencial.",
+      "La automatización con IA no exige empezar de cero. Así es como se conecta a lo que ya usas para dar seguimiento automático a cada cliente potencial.",
     date: "2026-06-20",
     icon: "plug",
     content: [
       {
         type: "p",
-        text: "Uno de los frenos más comunes para adoptar IA en un negocio es pensar que hay que cambiar de sistema: migrar el CRM, aprender una herramienta nueva, reentrenar al equipo. Ese cambio de raíz casi nunca es necesario.",
+        text: "Uno de los frenos más comunes para adoptar IA en un negocio es pensar que hay que empezar de cero: volver a teclear todos los clientes, cambiar de número, reentrenar al equipo. Ese cambio de raíz casi nunca es necesario.",
       },
       {
         type: "h2",
@@ -86,14 +86,14 @@ export const posts: BlogPost[] = [
       },
       {
         type: "p",
-        text: "El seguimiento de leads con IA se puede conectar directamente a las herramientas que ya usas: tu CRM actual, tu número de WhatsApp Business, tu correo o tus formularios web. La IA se integra a ese flujo existente en lugar de reemplazarlo, así que no hay migración de datos ni curva de aprendizaje para tu equipo.",
+        text: "En ZytonAI el seguimiento se monta sobre lo que ya tienes: tu número de WhatsApp Business, tu Instagram, los formularios de tu web y tus anuncios de Meta. Los clientes que llevas en Excel se suben tal como están, y la IA trabaja sobre ese flujo en lugar de reemplazarlo.",
       },
       {
         type: "list",
         items: [
-          "Se conecta a tu CRM actual, sea cual sea.",
-          "Funciona sobre WhatsApp, correo o formularios web.",
-          "Tu equipo sigue usando las mismas herramientas de siempre.",
+          "Tus clientes de Excel entran en minutos, sin teclearlos de nuevo.",
+          "Funciona sobre tu WhatsApp, tu Instagram y los formularios de tu web.",
+          "Tu número y tus cuentas siguen siendo los mismos.",
         ],
       },
       {
@@ -102,7 +102,7 @@ export const posts: BlogPost[] = [
       },
       {
         type: "p",
-        text: "Tu equipo sigue trabajando como siempre, pero ahora cada lead nuevo recibe una respuesta inmediata, con seguimiento automático hasta que esté listo para hablar con una persona. Nada se pierde por falta de tiempo o de cobertura horaria, y las conversaciones que sí necesitan criterio humano llegan filtradas y listas para cerrar.",
+        text: "Tu equipo sigue trabajando como siempre, pero ahora cada mensaje nuevo recibe una respuesta inmediata: el asistente contesta precios, ofrece horarios libres, agenda la cita y registra al interesado como lead. Nada se pierde por falta de tiempo o de cobertura horaria, y las conversaciones que sí necesitan criterio humano llegan marcadas a la bandeja de tu equipo.",
       },
       {
         type: "quote",
@@ -114,7 +114,7 @@ export const posts: BlogPost[] = [
       },
       {
         type: "p",
-        text: "Además, tener visibilidad de qué está pasando con cada lead es clave: reportes claros muestran cuáles fueron atendidos por la IA, cuáles pasaron a un humano y qué resultados está dando la automatización, para que puedas ajustar el proceso con datos reales en vez de suposiciones.",
+        text: "Además, tener visibilidad de qué está pasando con cada lead es clave: cada lead queda con su origen (formulario, anuncio o conversación), en la bandeja ves qué atendió el asistente y qué pasó a una persona, y el tablero te muestra cómo avanza tu embudo, para que ajustes el proceso con datos reales en vez de suposiciones.",
       },
     ],
   },

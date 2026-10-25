@@ -6,25 +6,25 @@ const services = [
     icon: Database,
     title: "Toda tu información en un solo lugar",
     description:
-      "Clientes, historial, documentos y conversaciones dejan de estar repartidos entre cuadernos, hojas de cálculo y chats.",
+      "Clientes, pagos, citas, documentos y conversaciones dejan de estar repartidos entre cuadernos, hojas de cálculo y chats. Si ya los tienes en Excel, los subes y quedan en el CRM.",
   },
   {
     icon: MessagesSquare,
     title: "Tus canales unificados",
     description:
-      "WhatsApp, correo, formularios y redes llegan a una sola bandeja. Tu equipo deja de saltar entre aplicaciones.",
+      "Los mensajes de WhatsApp e Instagram llegan a una sola bandeja, al lado de la ficha del cliente. Los contactos de tus formularios y de tus anuncios de Meta entran solos como leads.",
   },
   {
     icon: Bell,
     title: "Recordatorios que no se te pasan",
     description:
-      "Pólizas por vencer, citas próximas y clientes sin contactar generan un aviso automático antes de que el problema exista.",
+      "Pagos por vencer, renovaciones, citas próximas, cumpleaños y clientes que no han vuelto disparan un mensaje automático por correo o WhatsApp.",
   },
   {
     icon: SlidersHorizontal,
     title: "Se adapta a tu operación",
     description:
-      "Ves solo lo que tu negocio usa, no un menú de veinte módulos que nadie abre.",
+      "Eliges tu sector y el CRM arranca con la ficha, el embudo, el catálogo y los mensajes de ese tipo de negocio. Ves solo los módulos que usas y los demás los apagas.",
   },
 ];
 

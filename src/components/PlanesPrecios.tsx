@@ -57,8 +57,12 @@ const plans: Plan[] = [
       "Plantillas a elección",
       "Mensajes fijos automatizados por WhatsApp y/o correo",
       "Acompañamiento en la implementación",
-      "Actualizaciones incluidas",
+      "Actualizaciones incluidas: cada mejora llega a todos los planes",
     ],
+    // Checklist de planes, B-nota: en Base no hay bandeja. Se dice aquí y no
+    // cuando el cliente lo descubre.
+    costsNote:
+      "En Base los mensajes salen, pero las respuestas de tus clientes se leen en la bandeja del plan Pro. Por WhatsApp hacen falta plantillas aprobadas por Meta, y sus costos se pagan aparte, directamente a Meta.",
     cta: "Empezar con Base",
     featured: false,
   },
@@ -80,11 +84,11 @@ const plans: Plan[] = [
     features: [
       "Bandeja unificada con todos tus canales: WhatsApp e Instagram",
       "Asistente con IA que responde por WhatsApp e Instagram: 6.000 respuestas al mes incluidas",
-      "Pide landings de promoción personalizadas, sin costo",
+      "Una landing de promoción al mes hecha por nuestro equipo, sin costo",
       "Fidelización de clientes",
       "Trae tus clientes del Excel a un panel de verdad",
       "Análisis y captación de leads de tus campañas de Meta Ads",
-      "Atención prioritaria: tus solicitudes van primero",
+      "Atención prioritaria por WhatsApp, con respuesta el mismo día",
       "Hasta 25 usuarios",
     ],
     costsNote:

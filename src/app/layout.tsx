@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 const siteUrl = "https://www.zytonai.com";
 const title = "ZytonAI | CRM que unifica y potencia tu negocio";
 const description =
-  "CRM que reúne toda la información de tu negocio en un solo lugar y se adapta a cómo ya trabajas. Con IA conversacional y canales unificados, para agencias de seguros y negocios de belleza y salud.";
+  "CRM que reúne toda la información de tu negocio en un solo lugar y se adapta a cómo ya trabajas. Con tu marca, plantillas por sector, mensajes automáticos y un asistente con IA para WhatsApp e Instagram.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

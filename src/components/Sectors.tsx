@@ -7,11 +7,11 @@ const sectors = [
     audience: "Agencias de seguros",
     problem: "Pólizas que se vencen sin que nadie avise",
     description:
-      "Una renovación que se pasa es un cliente que se va sin decir nada. El CRM vigila cada fecha de vencimiento y dispara el aviso con tiempo.",
+      "Una renovación que se pasa es un cliente que se va sin decir nada. El CRM vigila la fecha de cada póliza y le escribe al cliente con los días de antelación que tú elijas.",
     points: [
-      "Alertas por vencimiento de póliza",
+      "Avisos de renovación y de pagos por vencer",
       "Historial completo de cada asegurado",
-      "Documentos y pólizas digitalizadas",
+      "Pólizas y documentos guardados en su ficha",
     ],
   },
   {
@@ -19,13 +19,29 @@ const sectors = [
     audience: "Belleza y salud",
     problem: "Clientes que no vuelven por falta de seguimiento",
     description:
-      "En spas y clínicas dentales el cliente no se pierde por precio, se pierde por silencio. El CRM detecta quién no ha vuelto y retoma la conversación.",
+      "En spas y clínicas dentales el cliente no se pierde por precio, se pierde por silencio. El CRM detecta quién lleva tiempo sin volver y le escribe por ti.",
     points: [
-      "Recordatorios de cita y de control",
-      "Aviso de clientes sin volver",
+      "Recordatorios de cita por correo o WhatsApp",
+      "Mensaje a los clientes que no han vuelto",
       "Ficha e historial de cada paciente",
     ],
   },
+];
+
+// Las plantillas de sector del SaaS (`services/sectores.py`). Si se agrega
+// una allá, se agrega aquí.
+const otrosSectores = [
+  "Barberías y peluquerías",
+  "Consultorios y terapias",
+  "Veterinarias",
+  "Talleres y servicio técnico",
+  "Lavaderos de autos",
+  "Gimnasios y academias",
+  "Tiendas y comercios",
+  "Restaurantes y cafeterías",
+  "Consultoría y servicios profesionales",
+  "Inmobiliarias",
+  "Colegios e institutos",
 ];
 
 export default function Sectors() {
@@ -43,8 +59,9 @@ export default function Sectors() {
                 Hecho para tu sector
               </h2>
               <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted">
-                No es un CRM genérico. Está pensado alrededor de los dos
-                problemas que más dinero cuestan en estos negocios.
+                No es un CRM genérico: al empezar eliges tu sector y arranca
+                configurado para él. Estos son los dos problemas que más dinero
+                cuestan a los negocios con los que más trabajamos.
               </p>
             </Reveal>
 
@@ -87,6 +104,22 @@ export default function Sectors() {
                 </Reveal>
               ))}
             </div>
+
+            <Reveal delay={0.5}>
+              <p className="mt-14 text-sm font-medium text-foreground">
+                También hay plantilla lista para:
+              </p>
+              <ul className="mt-4 flex flex-wrap gap-2.5">
+                {otrosSectores.map((nombre) => (
+                  <li
+                    key={nombre}
+                    className="rounded-full bg-background px-4 py-2 text-sm text-muted ring-1 ring-border"
+                  >
+                    {nombre}
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
           </div>
         </Reveal>
       </div>

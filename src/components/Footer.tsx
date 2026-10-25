@@ -23,7 +23,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="mt-3 text-sm leading-relaxed text-muted">
-              Agencia de automatización con IA para negocios en Colombia.
+              CRM con IA para negocios en Colombia.
             </p>
           </div>
 

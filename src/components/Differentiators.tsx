@@ -13,7 +13,7 @@ const pillars = [
     icon: Bot,
     title: "IA conversacional y canales unificados",
     description:
-      "Todos tus canales llegan a una sola bandeja, y una IA entrenada con la información de tu negocio responde y clasifica cada conversación. Tu equipo entra solo cuando hace falta criterio humano.",
+      "WhatsApp e Instagram llegan a una sola bandeja, y un asistente con IA que conoce tu catálogo responde precios, mira tu agenda, agenda citas y registra a los interesados como leads. Cuando hace falta criterio humano, pasa la conversación a tu equipo.",
   },
 ];
 
@@ -21,16 +21,16 @@ const examples = [
   {
     icon: ScanText,
     sector: "Agencias de seguros",
-    problem: "¿Transcribes cada póliza a mano?",
+    problem: "¿Tu cartera vive en un Excel?",
     solution:
-      "Le tomas una foto y queda digitalizada dentro del CRM: vigencias, coberturas y datos del asegurado, listos para buscar y para generar alertas de renovación.",
+      "Subes tu lista de asegurados tal como está y el CRM reconoce las columnas; la planilla de cobros también se carga desde Excel. Cada póliza que registras con su fecha queda vigilada para el aviso de renovación.",
   },
   {
     icon: HeartPulse,
     sector: "Belleza y salud",
     problem: "¿Las fichas de tus pacientes siguen en papel?",
     solution:
-      "Las digitalizamos y quedan enlazadas al historial de cada persona, a sus citas y a sus tratamientos previos. Tu equipo deja de buscar en carpetas antes de atender.",
+      "Armamos la ficha con las casillas que tú usas y cada documento escaneado queda en el historial de la persona, junto a sus citas y sus pagos. Tu equipo deja de buscar en carpetas antes de atender.",
   },
 ];
 
@@ -43,7 +43,7 @@ export default function Differentiators() {
             Qué nos hace diferentes
           </h2>
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted">
-            Tres razones por las que nuestros clientes dejan el CRM que tenían.
+            Tres cosas que no encuentras en un CRM genérico.
           </p>
         </Reveal>
 
@@ -81,8 +81,8 @@ export default function Differentiators() {
             </h3>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted">
               No te entregamos un software y te deseamos suerte. Si hay una tarea
-              que te consume horas cada semana, la construimos para ti dentro del
-              CRM.
+              que te consume horas cada semana, en el plan A medida la
+              construimos para ti dentro del CRM.
             </p>
 
             <div className="mt-12 grid gap-6 lg:grid-cols-2 lg:gap-8">
