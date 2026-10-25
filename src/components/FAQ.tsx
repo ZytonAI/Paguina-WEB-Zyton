@@ -4,32 +4,34 @@ const faqs = [
   {
     question: "¿Qué es ZytonAI?",
     answer:
-      "Es un CRM que unifica la información de tu negocio en un solo lugar: clientes, historial, documentos y conversaciones. Se configura alrededor de cómo ya trabajas, y cuando hace falta desarrollamos soluciones a la medida dentro del mismo sistema.",
+      "Es un CRM que unifica la información de tu negocio en un solo lugar: clientes, pagos, citas, documentos y conversaciones. Arranca con la plantilla de tu sector, se ajusta a cómo ya trabajas y, en el plan A medida, desarrollamos lo que tu proceso necesite dentro del mismo sistema.",
   },
   {
     question: "¿En qué se diferencia de otros CRM?",
     answer:
-      "La mayoría te obliga a acomodar tu negocio a su estructura y termina llena de módulos que nadie abre. Nosotros armamos el CRM alrededor de tu operación, sumamos IA conversacional sobre tus canales y desarrollamos a la medida lo que tu negocio necesite.",
+      "La mayoría te obliga a acomodar tu negocio a su estructura y termina llena de módulos que nadie abre. Aquí eliges qué módulos ves, la ficha del cliente lleva las casillas que tú defines, el CRM va con tu marca y, en el plan Pro, un asistente con IA atiende tu WhatsApp e Instagram.",
   },
   {
     question: "¿Necesito cambiar mis herramientas actuales?",
     answer:
-      "No. El CRM se conecta con lo que ya usas (WhatsApp, correo, formularios y otras herramientas). No te pedimos migrar tus procesos ni cambiar tu forma de trabajar.",
+      "No. Conectas tu número de WhatsApp Business, tu Instagram, tu Google Calendar, tus anuncios de Meta y los formularios de tu web, y si tienes los clientes en Excel los subes tal cual. No te pedimos cambiar tu forma de trabajar.",
   },
   {
     question: "¿Para qué tipo de negocio está pensado?",
     answer:
-      "Trabajamos principalmente con agencias de seguros y con negocios de belleza y salud, como spas y clínicas dentales. Son los sectores donde más pesa perder clientes por una póliza vencida o por falta de seguimiento.",
+      "Para negocios colombianos que atienden clientes y les dan seguimiento. Hay plantilla lista para corredurías de seguros, spas y centros de estética, clínicas odontológicas, consultorios, barberías, veterinarias, talleres, lavaderos, gimnasios, tiendas, restaurantes, consultorías, inmobiliarias y colegios. Si el tuyo no está, empiezas con la plantilla general y la ajustas.",
   },
   {
     question: "¿La IA responde igual que una persona de mi equipo?",
     answer:
-      "La IA se entrena con la información de tu negocio para responder preguntas frecuentes y clasificar conversaciones las 24 horas. Los casos que requieren criterio humano se derivan a tu equipo.",
+      "No, y no lo pretende. El asistente responde las 24 horas con la información que le das: tu catálogo y precios, tus horarios y tu agenda. Puede agendar citas, registrar a un interesado como lead y decirle a un cliente cuántos sellos lleva o si tiene un pago pendiente. Cuando la pregunta se sale de eso, marca la conversación para que la tome una persona de tu equipo.",
   },
   {
     // Mismas cifras que `plans.py` del SaaS (RESPUESTAS_IA_POR_PLAN y
     // PAQUETES_RESPUESTAS_IA): si cambian allá, cambian aquí.
     question: "¿Cuántas respuestas puede dar el asistente con IA?",
+    // Trae precios: en la portada no sale, los precios viven en /precios.
+    conPrecios: true,
     answer:
       "El plan Pro incluye 6.000 respuestas al mes, que alcanzan para el día a día de la mayoría de negocios. El CRM te avisa cuando vas por el 80 %, y si te hacen falta compras un paquete de 1.000 ($20.000) o de 3.000 ($50.000) respuestas extra, válido para ese mes. Si llegas al tope sin comprar más, el asistente deja de contestar y los mensajes le llegan a tu equipo como siempre.",
   },
@@ -44,12 +46,12 @@ const faqs = [
   {
     question: "¿Cuánto tiempo toma implementarlo?",
     answer:
-      "Depende de la complejidad de tus procesos actuales y de cuánto haya que desarrollar a la medida, pero el objetivo siempre es implementar sin interrumpir tu operación diaria.",
+      "Al pagar respondes un cuestionario corto sobre tu negocio y el CRM queda configurado con la plantilla de tu sector ese mismo día. Lo que más tarda es conectar WhatsApp, que depende de la aprobación de Meta. Te acompañamos en la puesta en marcha para que no interrumpa tu operación.",
   },
   {
     question: "¿Cómo sé qué resultados está dando?",
     answer:
-      "Recibes reportes claros de qué clientes están siendo atendidos, cuáles pasaron a un humano y qué renovaciones o citas se recuperaron gracias a los recordatorios automáticos.",
+      "El tablero te muestra ventas, recaudo, cartera, clientes nuevos y el avance de tu embudo, y lo armas con las gráficas que te importan. Cada mensaje automático queda registrado con su estado, y en la bandeja ves qué conversaciones atendió el asistente y cuáles pasó a tu equipo.",
   },
 ];
 
@@ -72,13 +74,17 @@ export default function FAQ({
    * (/faq) para no duplicar el mismo marcado en dos páginas.
    */
   withJsonLd = false,
+  /** Oculta las preguntas que dan precios (en la portada). */
+  sinPrecios = false,
 }: {
   withJsonLd?: boolean;
+  sinPrecios?: boolean;
 }) {
+  const visibles = sinPrecios ? faqs.filter((faq) => !faq.conPrecios) : faqs;
   return (
     <>
       <div className="divide-y divide-border border-t border-border">
-        {faqs.map((faq, i) => (
+        {visibles.map((faq, i) => (
           <Reveal key={faq.question} delay={i * 0.05}>
             <details className="group py-7">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-medium marker:content-none">
