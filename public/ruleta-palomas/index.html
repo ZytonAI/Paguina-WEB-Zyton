@@ -297,10 +297,10 @@
   var COLORES = ["#1d4ed8","#b91c1c","#15803d","#a16207","#7c3aed","#0e7490","#c2410c","#be185d",
                  "#4d7c0f","#1e3a8a","#9f1239","#0f766e","#6d28d9","#92400e","#155e75","#3f6212"];
 
-  // Socios fijos del club (los 13 del programa del club + Carlos Montes y Mauricio Castilla)
+  // Socios fijos del club (los 13 del programa del club + Carlos Montes, Mauricio Castilla y Humberto Moreno)
   var SOCIOS = ["Mauricio Castilla", "Gabriel Ferro", "Juan Antonio Barba", "Guillermo Gutiérrez",
     "Roberto Castilla", "Wilmar Ochoa", "Alfredo Ferro", "Familia Ferro", "Carlos Montes", "Los Rodríguez", "Palomar MD",
-    "Felipe Sarmiento", "Hermanos Arizabaleta", "Johan López", "Pedro Amezquita"];
+    "Felipe Sarmiento", "Hermanos Arizabaleta", "Johan López", "Pedro Amezquita", "Humberto Moreno"];
 
   // estado.palomas: {nombre: palomas} de la categoria en curso.
   // estado.socios: los que participan, en el orden sorteado al empezar (giros apunta a su indice).
@@ -321,28 +321,19 @@
   function palomasDe(nombre){ return estado.palomas[nombre] || 0; }
   function totalPalomas(){ return SOCIOS.reduce(function(a,n){ return a + palomasDe(n); }, 0); }
   function participantes(){ return SOCIOS.filter(function(n){ return palomasDe(n) > 0; }); }
-  // Palomas por cajon = total de palomas de los socios / cajones del camion (con decimales).
-  // Cajones de cada socio = sus palomas / palomas por cajon. Se le da la parte entera (minimo 1)
-  // y los cajones que sobran por los decimales van a los decimales mas altos, para usar los 77.
+  // Todo en numeros enteros y siempre hacia arriba: una paloma es una unidad.
+  // Palomas por cajon = total de palomas / cajones del camion, redondeado hacia arriba.
+  // Cajones de cada socio = sus palomas / palomas por cajon, redondeado hacia arriba.
+  // Si al redondear los cajones no caben en el camion, se sube una paloma por cajon hasta que quepan.
   function reparto(){
-    var T = totalPalomas(), C = totalCajones(), r = { k: 0, cajas: {}, exacto: {}, usados: 0 };
+    var T = totalPalomas(), C = totalCajones(), r = { k: 0, cajas: {}, usados: 0 };
     if (!T) return r;
-    var part = participantes(), objetivo = Math.min(T, C);
-    r.k = Math.max(1, T / C);
-    part.forEach(function(n){
-      var q = palomasDe(n) / r.k;
-      r.exacto[n] = q; r.cajas[n] = Math.max(1, Math.floor(q)); r.usados += r.cajas[n];
-    });
-    var resto = function(n){ return r.exacto[n] - r.cajas[n]; };
-    var orden = part.slice().sort(function(a, b){ return resto(b) - resto(a) || palomasDe(b) - palomasDe(a); });
-    for (var i = 0; r.usados < objetivo; i++){ r.cajas[orden[i % orden.length]]++; r.usados++; }
-    // Si el minimo de 1 cajon por socio se paso del total, se quita a quien mas tiene de sobra
-    while (r.usados > objetivo){
-      var mas = part.filter(function(n){ return r.cajas[n] > 1; }).sort(function(a, b){ return resto(a) - resto(b); })[0];
-      if (!mas) break;
-      r.cajas[mas]--; r.usados--;
+    var part = participantes();
+    for (var k = Math.max(1, Math.ceil(T / C)); ; k++){
+      r.k = k; r.usados = 0;
+      part.forEach(function(n){ r.cajas[n] = Math.ceil(palomasDe(n) / k); r.usados += r.cajas[n]; });
+      if (r.usados <= C) return r;
     }
-    return r;
   }
   function cajonesDe(i){ return estado.giros.filter(function(g){ return g.socio === i; }).map(function(g){ return g.cajon; }); }
   function pendientes(i){ return estado.socios[i].cajas - cajonesDe(i).length; }
@@ -360,7 +351,6 @@
     var d = estado.fecha ? new Date(estado.fecha) : new Date();
     return d.toLocaleDateString("es", { day: "numeric", month: "long", year: "numeric" });
   }
-  function decimal(x){ return (Math.round(x * 100) / 100).toLocaleString("es"); }
 
   // Numero aleatorio justo (sin sesgo de modulo)
   function azar(n){
@@ -407,7 +397,7 @@
       var p = palomasDe(n), c = r.cajas[n] || 0;
       return "<tr class='" + (p ? "" : "fuera") + "'><td>" + (i + 1) + "</td><td>" + esc(n) + "</td>" +
         "<td><input class='num' type='number' min='0' inputmode='numeric' data-nombre='" + esc(n) + "' value='" + (p || "") + "'" + (bloqueado ? " disabled" : "") + "></td>" +
-        "<td><b>" + (c || "—") + "</b>" + (c ? " <small class='hint'>(" + decimal(r.exacto[n]) + ")</small>" : "") + "</td></tr>";
+        "<td><b>" + (c || "—") + "</b></td></tr>";
     }).join("");
 
     var desde = 1, partes = estado.caras.map(function(c){
@@ -416,11 +406,9 @@
     $("txtTotal").innerHTML = "Total en el camión: <b>" + C + " cajones</b> (" + esc(partes.join(" · ")) + ")";
     if (!T) $("txtFormula").textContent = "Escribe las palomas de los socios para calcular cuántas van por cajón.";
     else {
-      $("txtFormula").innerHTML = T < C
-        ? T + " palomas ÷ " + C + " cajones = " + decimal(T / C) + ". Hay menos palomas que cajones: <b>1 paloma por cajón</b>."
-        : T + " palomas ÷ " + C + " cajones = <b>" + decimal(r.k) + " palomas por cajón</b>" +
-        "<br><span class='hint'>Cajones de cada socio = sus palomas ÷ " + decimal(r.k) + " (entre paréntesis, la cuenta exacta). " +
-        "Los cajones que sobran por los decimales van a los socios con el decimal más alto.</span>";
+      $("txtFormula").innerHTML = T + " palomas ÷ " + C + " cajones → <b>" + r.k + (r.k === 1 ? " paloma" : " palomas") + " por cajón</b>" +
+        "<br><span class='hint'>Todo en números enteros, redondeando siempre hacia arriba. " +
+        "Cajones de cada socio = sus palomas ÷ " + r.k + ", redondeado hacia arriba.</span>";
     }
 
     var usados = r.usados, participan = participantes().length;
