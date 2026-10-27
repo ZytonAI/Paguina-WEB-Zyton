@@ -31,6 +31,9 @@ type Plan = {
   features: string[];
   costsNote?: string;
   cta: string;
+  /** Días de prueba gratis. Tiene que decir lo mismo que `plans.DIAS_PRUEBA`
+   *  y `PLANES_CON_PRUEBA` en el backend: si cambia uno, cambian los dos. */
+  prueba?: number;
   featured: boolean;
 };
 
@@ -94,6 +97,7 @@ const plans: Plan[] = [
     costsNote:
       "Los costos de IA están incluidos hasta 6.000 respuestas al mes; si necesitas más, hay paquetes de 1.000 ($20.000) y 3.000 ($50.000). Los costos de Meta (WhatsApp Business API y Meta Ads) se pagan aparte, directamente a Meta.",
     cta: "Empezar con Pro",
+    prueba: 7,
     featured: true,
   },
   {
@@ -157,6 +161,8 @@ export default function PlanesPrecios() {
           const destino = plan.id
             ? `${APP_URL}/registro?plan=${plan.id}&periodo=${periodo}`
             : "/contacto";
+          // Con prueba, el botón principal es la prueba y pagar ya queda debajo.
+          const destinoPrueba = plan.prueba ? `${destino}&prueba=1` : null;
           const claseCta = `mt-auto rounded-full px-6 py-3.5 text-center text-sm font-medium transition-colors ${
             plan.featured
               ? "bg-accent-strong text-white hover:bg-[#0f4fb8]"
@@ -223,7 +229,19 @@ export default function PlanesPrecios() {
                   </p>
                 )}
 
-                {plan.id ? (
+                {destinoPrueba ? (
+                  <div className="mt-auto flex flex-col gap-3">
+                    <a href={destinoPrueba} className={claseCta}>
+                      Probar {plan.prueba} días gratis
+                    </a>
+                    <p className="text-center text-xs leading-relaxed text-muted">
+                      Sin tarjeta y sin compromiso: al terminar decides si sigues.{" "}
+                      <a href={destino} className="font-medium text-accent-strong underline-offset-2 hover:underline">
+                        O empieza pagando
+                      </a>
+                    </p>
+                  </div>
+                ) : plan.id ? (
                   // Sale del dominio de la web hacia la app: <a>, no <Link>.
                   <a href={destino} className={claseCta}>
                     {plan.cta}

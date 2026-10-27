@@ -43,6 +43,8 @@ export default function PreciosPage() {
             <p className="mt-12 text-center text-sm leading-relaxed text-muted">
               Precios finales en pesos colombianos. Al elegir un plan te
               pedimos los datos de tu empresa y pasas al pago seguro con Wompi.
+              El plan Pro se puede probar 7 días gratis, sin tarjeta: al
+              terminar, la agregas solo si decides seguir.
             </p>
           </div>
         </section>
