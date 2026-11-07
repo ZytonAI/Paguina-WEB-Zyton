@@ -176,8 +176,11 @@
 
     <div class="card">
       <h2>Camión</h2>
-      <p class="formula" id="txtFormula"></p>
+      <div class="row">
+        <div style="flex:0 1 220px"><label for="porCajon">Palomas por cajón</label><input id="porCajon" type="number" min="1" max="999" inputmode="numeric"></div>
+      </div>
       <p class="hint" id="txtTotal"></p>
+      <p class="hint">Con las palomas por cajón se calcula cuántos cajones le tocan a cada socio. Se puede cambiar a mano en la tabla.</p>
       <div class="resumen" id="resumen"></div>
       <p class="hint">El orden de los turnos se sortea al empezar.</p>
       <div class="acciones">
@@ -304,10 +307,15 @@
 
   // estado.palomas: {nombre: palomas} de la categoria en curso.
   // estado.socios: los que participan, en el orden sorteado al empezar (giros apunta a su indice).
+  // estado.cajasManual: {nombre: cajones} cuando se corrige a mano el calculo de un socio.
+  var POR_CAJON = 20;
   var estado = cargar();
   if (!estado || estado.v !== 4){
-    estado = { v: 4, categoria: "", palomas: {}, categorias: [], socios: [], porCajon: 0, fase: "config", giros: [], turno: 0, fecha: null };
+    estado = { v: 4, categoria: "", palomas: {}, cajasManual: {}, categorias: [], socios: [], porCajon: POR_CAJON, fase: "config", giros: [], turno: 0, fecha: null };
   }
+  if (!estado.cajasManual) estado.cajasManual = {};
+  // Cada vez que se abre sin un sorteo empezado, vuelve al default de 20 palomas por cajon
+  if (!estado.giros.length) estado.porCajon = POR_CAJON;
   estado.caras = CARAS;
   // giros: [{socio: idx, cajon: n}]
 
@@ -321,19 +329,15 @@
   function palomasDe(nombre){ return estado.palomas[nombre] || 0; }
   function totalPalomas(){ return SOCIOS.reduce(function(a,n){ return a + palomasDe(n); }, 0); }
   function participantes(){ return SOCIOS.filter(function(n){ return palomasDe(n) > 0; }); }
-  // Todo en numeros enteros y siempre hacia arriba: una paloma es una unidad.
-  // Palomas por cajon = total de palomas / cajones del camion, redondeado hacia arriba.
-  // Cajones de cada socio = sus palomas / palomas por cajon, redondeado hacia arriba.
-  // Si al redondear los cajones no caben en el camion, se sube una paloma por cajon hasta que quepan.
+  // Las palomas por cajon las escribe el usuario (20 por defecto).
+  // Cajones de cada socio = sus palomas / palomas por cajon, redondeado hacia arriba,
+  // salvo que se haya corregido a mano en la tabla.
+  function cajasAuto(nombre){ return Math.max(1, Math.ceil(palomasDe(nombre) / Math.max(1, estado.porCajon))); }
+  function cajasDe(nombre){ return estado.cajasManual[nombre] || cajasAuto(nombre); }
   function reparto(){
-    var T = totalPalomas(), C = totalCajones(), r = { k: 0, cajas: {}, usados: 0 };
-    if (!T) return r;
-    var part = participantes();
-    for (var k = Math.max(1, Math.ceil(T / C)); ; k++){
-      r.k = k; r.usados = 0;
-      part.forEach(function(n){ r.cajas[n] = Math.ceil(palomasDe(n) / k); r.usados += r.cajas[n]; });
-      if (r.usados <= C) return r;
-    }
+    var r = { k: estado.porCajon, cajas: {}, usados: 0 };
+    participantes().forEach(function(n){ r.cajas[n] = cajasDe(n); r.usados += r.cajas[n]; });
+    return r;
   }
   function cajonesDe(i){ return estado.giros.filter(function(g){ return g.socio === i; }).map(function(g){ return g.cajon; }); }
   function pendientes(i){ return estado.socios[i].cajas - cajonesDe(i).length; }
@@ -364,16 +368,27 @@
 
   $("tablaSocios").addEventListener("change", function(e){
     var t = e.target, nombre = t.dataset.nombre; if (!nombre) return;
-    var p = parseInt(t.value, 10);
-    if (p > 0) estado.palomas[nombre] = Math.min(p, 9999); else delete estado.palomas[nombre];
+    var v = parseInt(t.value, 10);
+    if (t.dataset.campo === "cajas"){
+      // Vacio o igual al calculo: vuelve al automatico
+      if (t.value === "" || !(v > 0) || v === cajasAuto(nombre)) delete estado.cajasManual[nombre];
+      else estado.cajasManual[nombre] = Math.min(v, totalCajones());
+    } else {
+      if (v > 0) estado.palomas[nombre] = Math.min(v, 9999);
+      else { delete estado.palomas[nombre]; delete estado.cajasManual[nombre]; }
+    }
     guardar(); pintarConfig();
+  });
+
+  $("porCajon").addEventListener("change", function(){
+    var v = parseInt(this.value, 10); if (v > 0) estado.porCajon = Math.min(v, 999); guardar(); pintarConfig();
   });
 
   $("btnEmpezar").addEventListener("click", function(){
     var cat = (estado.categoria || "").trim();
     if (!estado.giros.length){
       var r = reparto();
-      if (!r.k || !cat || r.usados > totalCajones()) return;
+      if (!r.usados || !cat || r.usados > totalCajones()) return;
       // Los que participan, en el orden que sale sorteado
       var a = participantes().map(function(n){ return { nombre: n, palomas: palomasDe(n), cajas: r.cajas[n] }; });
       for (var i = a.length - 1; i > 0; i--){ var j = azar(i + 1), x = a[i]; a[i] = a[j]; a[j] = x; }
@@ -394,31 +409,29 @@
     $("listaCategorias").innerHTML = (estado.categorias || []).map(function(c){ return "<option value='" + esc(c) + "'>"; }).join("");
 
     $("tablaSocios").innerHTML = SOCIOS.map(function(n, i){
-      var p = palomasDe(n), c = r.cajas[n] || 0;
+      var p = palomasDe(n), c = r.cajas[n] || 0, d = bloqueado ? " disabled" : "";
       return "<tr class='" + (p ? "" : "fuera") + "'><td>" + (i + 1) + "</td><td>" + esc(n) + "</td>" +
-        "<td><input class='num' type='number' min='0' inputmode='numeric' data-nombre='" + esc(n) + "' value='" + (p || "") + "'" + (bloqueado ? " disabled" : "") + "></td>" +
-        "<td><b>" + (c || "—") + "</b></td></tr>";
+        "<td><input class='num' type='number' min='0' inputmode='numeric' data-campo='palomas' data-nombre='" + esc(n) + "' value='" + (p || "") + "'" + d + "></td>" +
+        "<td>" + (p ? "<input class='num' type='number' min='1' inputmode='numeric' data-campo='cajas' data-nombre='" + esc(n) + "' value='" + c + "'" + d + ">" : "—") + "</td></tr>";
     }).join("");
 
     var desde = 1, partes = estado.caras.map(function(c){
       var r = c.nombre + ": " + desde + "–" + (desde + c.cols * c.filas - 1); desde += c.cols * c.filas; return r;
     });
     $("txtTotal").innerHTML = "Total en el camión: <b>" + C + " cajones</b> (" + esc(partes.join(" · ")) + ")";
-    if (!T) $("txtFormula").textContent = "Escribe las palomas de los socios para calcular cuántas van por cajón.";
-    else {
-      $("txtFormula").innerHTML = T + " palomas ÷ " + C + " cajones → <b>" + r.k + (r.k === 1 ? " paloma" : " palomas") + " por cajón</b>" +
-        "<br><span class='hint'>Todo en números enteros, redondeando siempre hacia arriba. " +
-        "Cajones de cada socio = sus palomas ÷ " + r.k + ", redondeado hacia arriba.</span>";
-    }
+    var pc = $("porCajon");
+    if (document.activeElement !== pc) pc.value = estado.porCajon;
+    pc.disabled = bloqueado;
 
-    var usados = r.usados, participan = participantes().length;
+    var usados = r.usados, participan = participantes().length, libres = C - usados;
     var falta = !(estado.categoria || "").trim();
     $("resumen").innerHTML =
       "<span>Socios: " + participan + "</span>" +
       "<span>Palomas: " + T + "</span>" +
       "<span>Cajones a sortear: " + usados + " de " + C + "</span>" +
+      (libres < 0 ? "<span class='bad'>Faltan " + (-libres) + " cajones en el camión</span>" : (T ? "<span class='ok'>Quedan libres: " + libres + "</span>" : "")) +
       (falta && !bloqueado ? "<span class='bad'>Falta la categoría</span>" : "");
-    $("btnEmpezar").disabled = !bloqueado && (!T || falta);
+    $("btnEmpezar").disabled = !bloqueado && (!T || falta || libres < 0);
     $("btnEmpezar").textContent = bloqueado ? "Seguir sorteo ▶" : "Empezar sorteo ▶";
   }
 
@@ -697,7 +710,7 @@
 
   $("btnNuevo").addEventListener("click", function(){
     if (!confirm("¿Empezar un sorteo nuevo (otra categoría)?\n\nSe borran los cajones sorteados, la categoría y las palomas escritas.")) return;
-    estado.giros = []; estado.socios = []; estado.palomas = {}; estado.categoria = ""; estado.porCajon = 0;
+    estado.giros = []; estado.socios = []; estado.palomas = {}; estado.cajasManual = {}; estado.categoria = ""; estado.porCajon = POR_CAJON;
     estado.turno = 0; estado.fecha = null; estado.fase = "config"; guardar(); pintar();
   });
 
