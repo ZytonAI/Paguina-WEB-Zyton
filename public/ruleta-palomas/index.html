@@ -111,6 +111,8 @@
   .cajon b{display:block;font-size:.9rem;color:var(--ink)}
   .cajon.lleno{color:#fff;border-color:transparent;box-shadow:inset 0 -3px 0 rgba(0,0,0,.18)}
   .cajon.lleno b{color:#fff}
+  .cajon.anulado{background:repeating-linear-gradient(45deg,#e4ddca 0 6px,#d6cdb6 6px 12px);color:#a39e90;border-style:dashed}
+  .cajon.anulado b{color:#a39e90;text-decoration:line-through}
 
   .modal{position:fixed;inset:0;background:rgba(8,22,51,.72);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:16px;z-index:10}
   .modal.on{display:flex}
@@ -122,6 +124,10 @@
     font-size:4.2rem;font-weight:900;line-height:1;color:#fff;background:radial-gradient(circle at 35% 30%, var(--navy-2), var(--navy-3));
     box-shadow:0 0 0 6px var(--gold), 0 0 0 9px #f3ead6, 0 12px 26px rgba(15,37,87,.35)}
   .modal .nombre-turno{font-size:2.4rem;font-weight:900;line-height:1.1;margin:10px 0}
+  .auto{height:6px;border-radius:3px;background:#efe9da;margin-top:16px;overflow:hidden}
+  .auto i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--gold-2),var(--gold));transform-origin:left}
+  .auto i.corre{animation:cierra 2s linear forwards}
+  @keyframes cierra{from{transform:scaleX(1)}to{transform:scaleX(0)}}
   .otros{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:8px}
   .otros button{padding:6px 12px;font-size:.9rem}
   #mImgCaja{max-width:560px}
@@ -257,7 +263,8 @@
     <div style="color:var(--muted)">le tocó el cajón</div>
     <div class="grande" id="mNumero"></div>
     <div id="mCara" style="color:var(--gold-3);font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:.85rem"></div>
-    <button class="primary" id="mOk" style="margin-top:16px;width:100%">Continuar</button>
+    <div class="auto"><i id="mBarra"></i></div>
+    <button class="primary" id="mOk" style="margin-top:12px;width:100%">Continuar</button>
   </div>
 </div>
 
@@ -294,9 +301,12 @@
 (function(){
   "use strict";
   var CLAVE = "ruleta-palomas-v2";
-  // Estructura fija del camion: dos caras, numeracion corrida
-  // Misma estructura que CARAS en src/app/api/ruleta-palomas/imagen/route.tsx (7 de alto, el largo varia)
-  var CARAS = [{ nombre: "Cara 1", cols: 6, filas: 7 }, { nombre: "Cara 2", cols: 5, filas: 7 }];
+  // Estructura fija del camion: dos lados, numeracion corrida (el lado corto empieza en 1, el largo en 36)
+  // Misma estructura que CARAS y ANULADOS en src/app/api/ruleta-palomas/imagen/route.tsx (7 de alto, el largo varia)
+  var CARAS = [{ nombre: "Lado corto", cols: 5, filas: 7 }, { nombre: "Lado largo", cols: 6, filas: 7 }];
+  // Cajones que no se sortean (no salen en la ruleta ni cuentan para el total)
+  var ANULADOS = [36, 42, 48, 54, 60, 66];
+  function anulado(n){ return ANULADOS.indexOf(n) >= 0; }
   var COLORES = ["#1d4ed8","#b91c1c","#15803d","#a16207","#7c3aed","#0e7490","#c2410c","#be185d",
                  "#4d7c0f","#1e3a8a","#9f1239","#0f766e","#6d28d9","#92400e","#155e75","#3f6212"];
 
@@ -310,8 +320,10 @@
   // estado.cajasManual: {nombre: cajones} cuando se corrige a mano el calculo de un socio.
   var POR_CAJON = 20;
   var estado = cargar();
-  if (!estado || estado.v !== 4){
-    estado = { v: 4, categoria: "", palomas: {}, cajasManual: {}, categorias: [], socios: [], porCajon: POR_CAJON, fase: "config", giros: [], turno: 0, fecha: null };
+  if (!estado || estado.v !== 5){
+    var previas = estado && estado.categorias || [];
+    estado = { v: 5, categoria: "", palomas: {}, cajasManual: {}, categorias: [], socios: [], porCajon: POR_CAJON, fase: "config", giros: [], turno: 0, fecha: null };
+    estado.categorias = previas;
   }
   if (!estado.cajasManual) estado.cajasManual = {};
   // Cada vez que se abre sin un sorteo empezado, vuelve al default de 20 palomas por cajon
@@ -325,7 +337,8 @@
   var $ = function(id){ return document.getElementById(id); };
   function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]; }); }
   function color(i){ return COLORES[i % COLORES.length]; }
-  function totalCajones(){ return estado.caras.reduce(function(a,c){ return a + c.cols * c.filas; }, 0); }
+  function ultimoCajon(){ return estado.caras.reduce(function(a,c){ return a + c.cols * c.filas; }, 0); }
+  function totalCajones(){ return ultimoCajon() - ANULADOS.length; }
   function palomasDe(nombre){ return estado.palomas[nombre] || 0; }
   function totalPalomas(){ return SOCIOS.reduce(function(a,n){ return a + palomasDe(n); }, 0); }
   function participantes(){ return SOCIOS.filter(function(n){ return palomasDe(n) > 0; }); }
@@ -418,7 +431,7 @@
     var desde = 1, partes = estado.caras.map(function(c){
       var r = c.nombre + ": " + desde + "–" + (desde + c.cols * c.filas - 1); desde += c.cols * c.filas; return r;
     });
-    $("txtTotal").innerHTML = "Total en el camión: <b>" + C + " cajones</b> (" + esc(partes.join(" · ")) + ")";
+    $("txtTotal").innerHTML = "Total en el camión: <b>" + C + " cajones</b> (" + esc(partes.join(" · ")) + "). No se sortean: " + ANULADOS.join(", ") + ".";
     var pc = $("porCajon");
     if (document.activeElement !== pc) pc.value = estado.porCajon;
     pc.disabled = bloqueado;
@@ -484,7 +497,7 @@
 
   function disponibles(){
     var usados = {}; estado.giros.forEach(function(g){ usados[g.cajon] = true; });
-    var r = []; for (var n = 1, T = totalCajones(); n <= T; n++) if (!usados[n]) r.push(n);
+    var r = []; for (var n = 1, T = ultimoCajon(); n <= T; n++) if (!usados[n] && !anulado(n)) r.push(n);
     return r;
   }
 
@@ -543,7 +556,7 @@
   }
 
   function ponerRotacion(grados, animar){
-    canvas.style.transition = animar ? "transform 5.5s cubic-bezier(.12,.75,.12,1)" : "none";
+    canvas.style.transition = animar ? "transform 3s cubic-bezier(.15,.7,.15,1)" : "none";
     canvas.style.transform = "rotate(" + grados + "deg)";
   }
 
@@ -557,7 +570,7 @@
     // el segmento idx queda bajo el puntero (arriba); pequeno desvio dentro del segmento
     var desvio = (azar(1000) / 1000 - 0.5) * seg * 0.7;
     var destino = ((-((idx + 0.5) * seg + desvio)) % 360 + 360) % 360;
-    var vueltas = 6 + azar(3);
+    var vueltas = 5 + azar(2);
     var rot = sentido > 0 ? 360 * vueltas + destino : destino - 360 * vueltas;
     ponerRotacion(rot, true);
     setTimeout(function(){
@@ -569,19 +582,26 @@
       $("mNumero").textContent = cajon;
       $("mCara").textContent = cara && estado.caras.length > 1 ? cara.nombre : "";
       $("modal").classList.add("on"); $("mOk").focus();
-    }, 5700);
+      // La imagen del numero se ve 2 segundos y vuelve sola a la ruleta
+      var barra = $("mBarra"); barra.classList.remove("corre"); void barra.offsetWidth; barra.classList.add("corre");
+      cierreAuto = setTimeout(cerrarResultado, 2000);
+    }, 3200);
   }
   $("btnAdelante").addEventListener("click", function(){ girar(1); });
   $("btnAtras").addEventListener("click", function(){ girar(-1); });
 
-  $("mOk").addEventListener("click", function(){
+  var cierreAuto = null;
+  function cerrarResultado(){
+    clearTimeout(cierreAuto); cierreAuto = null;
+    if (!$("modal").classList.contains("on")) return;
     $("modal").classList.remove("on");
     girando = false; ponerRotacion(0, false);
     var antes = turnoEnGiro ? turnoEnGiro.socio : null; turnoEnGiro = null;
     pintar();
     var t = turnoActual();
     if (t && antes !== null && t.socio !== antes) avisarTurno(t.socio, antes);
-  });
+  }
+  $("mOk").addEventListener("click", cerrarResultado);
 
   $("btnVolver").addEventListener("click", function(){ estado.fase = "config"; guardar(); pintar(); });
 
@@ -638,7 +658,8 @@
       var html = "<div class='cara' style='flex:" + c.cols + " 1 " + (c.cols * 46) + "px'><h3>" + esc(c.nombre) + "</h3><div class='camion' style='grid-template-columns:repeat(" + c.cols + ",minmax(0,1fr))'>";
       for (var n = desde; n < desde + c.cols * c.filas; n++){
         var i = dueno[n];
-        html += i === undefined
+        html += anulado(n) ? "<div class='cajon anulado' title='No se sortea'><b>" + n + "</b>—</div>"
+          : i === undefined
           ? "<div class='cajon'><b>" + n + "</b></div>"
           : "<div class='cajon lleno' style='background:" + color(i) + "' title='" + esc(estado.socios[i].nombre) + "'><b>" + n + "</b>" + esc(estado.socios[i].nombre.split(" ")[0]) + "</div>";
       }

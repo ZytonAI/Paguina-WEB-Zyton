@@ -5,12 +5,15 @@ import { ImageResponse } from "next/og";
 // Imagen individual de la ruleta de palomas (public/ruleta-palomas/).
 // Se dibuja en el servidor porque Safari bloquea leer el canvas en el navegador.
 
-// Misma estructura que CARAS en public/ruleta-palomas/index.html
+// Misma estructura que CARAS y ANULADOS en public/ruleta-palomas/index.html
+// (el lado corto empieza en 1 y el largo en 36)
 const CARAS = [
-  { nombre: "Cara 1", cols: 6, filas: 7 },
-  { nombre: "Cara 2", cols: 5, filas: 7 },
+  { nombre: "Lado corto", cols: 5, filas: 7 },
+  { nombre: "Lado largo", cols: 6, filas: 7 },
 ];
 const TOTAL = CARAS.reduce((a, c) => a + c.cols * c.filas, 0);
+// Cajones que no se sortean
+const ANULADOS = new Set([36, 42, 48, 54, 60, 66]);
 
 // Colores del escudo del club
 const NAVY = "#0f2557";
@@ -30,7 +33,7 @@ export async function GET(req: Request) {
   const categoria = (q.get("cat") || "").slice(0, 30);
   const color = /^[0-9a-fA-F]{6}$/.test(q.get("col") || "") ? `#${q.get("col")}` : "#1d4ed8";
   const cajones = [...new Set((q.get("c") || "").split(",").map((x) => parseInt(x, 10)))]
-    .filter((n) => n >= 1 && n <= TOTAL)
+    .filter((n) => n >= 1 && n <= TOTAL && !ANULADOS.has(n))
     .sort((a, b) => a - b);
 
   const [medium, black, logo] = await Promise.all([
@@ -175,6 +178,7 @@ export async function GET(req: Request) {
                     {Array.from({ length: c.cols }, (_, k) => {
                       const n = c.inicio + f * c.cols + k;
                       const mio = mios.has(n);
+                      const fuera = ANULADOS.has(n);
                       return (
                         <div key={n} style={{ width: cel, height: cel, padding: 3, display: "flex" }}>
                           <div
@@ -187,11 +191,11 @@ export async function GET(req: Request) {
                               fontSize: Math.round(cel * 0.36),
                               fontWeight: mio ? 900 : 500,
                               background: mio ? color : "transparent",
-                              border: mio ? "none" : "2px solid rgba(255,255,255,.18)",
-                              color: mio ? "#fff" : "rgba(255,255,255,.35)",
+                              border: mio ? "none" : fuera ? "2px dashed rgba(255,255,255,.12)" : "2px solid rgba(255,255,255,.18)",
+                              color: mio ? "#fff" : fuera ? "rgba(255,255,255,.15)" : "rgba(255,255,255,.35)",
                             }}
                           >
-                            {String(n)}
+                            {fuera ? "—" : String(n)}
                           </div>
                         </div>
                       );
