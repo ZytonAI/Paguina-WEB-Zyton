@@ -305,7 +305,7 @@
   // Misma estructura que CARAS y ANULADOS en src/app/api/ruleta-palomas/imagen/route.tsx (7 de alto, el largo varia)
   var CARAS = [{ nombre: "Lado corto", cols: 5, filas: 7 }, { nombre: "Lado largo", cols: 6, filas: 7 }];
   // Cajones que no se sortean (no salen en la ruleta ni cuentan para el total)
-  var ANULADOS = [36, 42, 48, 54, 60, 66];
+  var ANULADOS = []; // 21/11/2026: se desbloquean 36, 42, 48, 54, 60 y 66
   function anulado(n){ return ANULADOS.indexOf(n) >= 0; }
   var COLORES = ["#1d4ed8","#b91c1c","#15803d","#a16207","#7c3aed","#0e7490","#c2410c","#be185d",
                  "#4d7c0f","#1e3a8a","#9f1239","#0f766e","#6d28d9","#92400e","#155e75","#3f6212"];
@@ -431,7 +431,7 @@
     var desde = 1, partes = estado.caras.map(function(c){
       var r = c.nombre + ": " + desde + "–" + (desde + c.cols * c.filas - 1); desde += c.cols * c.filas; return r;
     });
-    $("txtTotal").innerHTML = "Total en el camión: <b>" + C + " cajones</b> (" + esc(partes.join(" · ")) + "). No se sortean: " + ANULADOS.join(", ") + ".";
+    $("txtTotal").innerHTML = "Total en el camión: <b>" + C + " cajones</b> (" + esc(partes.join(" · ")) + ")." + (ANULADOS.length ? " No se sortean: " + ANULADOS.join(", ") + "." : "");
     var pc = $("porCajon");
     if (document.activeElement !== pc) pc.value = estado.porCajon;
     pc.disabled = bloqueado;

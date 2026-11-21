@@ -13,7 +13,7 @@ const CARAS = [
 ];
 const TOTAL = CARAS.reduce((a, c) => a + c.cols * c.filas, 0);
 // Cajones que no se sortean
-const ANULADOS = new Set([36, 42, 48, 54, 60, 66]);
+const ANULADOS = new Set<number>([]); // 21/11/2026: se desbloquean 36, 42, 48, 54, 60 y 66
 
 // Colores del escudo del club
 const NAVY = "#0f2557";
