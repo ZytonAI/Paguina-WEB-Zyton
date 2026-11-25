@@ -19,7 +19,7 @@ export default function Footer() {
             <div className="flex items-center gap-2">
               <Image src="/logo-mark.png" alt="" width={28} height={28} />
               <span className="font-medium tracking-tight text-foreground">
-                ZYTON <span className="text-accent-strong">AI</span>
+                ZYTON <span className="text-accent-strong">CRM</span>
               </span>
             </div>
             <p className="mt-3 text-sm leading-relaxed text-muted">

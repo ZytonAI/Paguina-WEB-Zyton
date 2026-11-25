@@ -25,7 +25,7 @@ export default function Header() {
         <Link href="/" className="flex shrink-0 items-center gap-2">
           <Image src="/logo-mark.png" alt="" width={32} height={32} priority />
           <span className="text-lg font-semibold tracking-tight">
-            ZYTON <span className="text-accent-strong">AI</span>
+            ZYTON <span className="text-accent-strong">CRM</span>
           </span>
         </Link>
 
