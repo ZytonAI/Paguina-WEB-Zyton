@@ -58,7 +58,7 @@ export default function Header() {
               href="https://www.instagram.com/zytonai/"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Instagram de ZytonAI"
+              aria-label="Instagram de Zyton CRM"
               className="text-muted transition-colors hover:text-foreground"
             >
               <InstagramIcon className="h-5 w-5" />
@@ -67,7 +67,7 @@ export default function Header() {
               href="https://www.linkedin.com/company/zyton-ai/"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="LinkedIn de ZytonAI"
+              aria-label="LinkedIn de Zyton CRM"
               className="text-muted transition-colors hover:text-foreground"
             >
               <LinkedinIcon className="h-5 w-5" />
@@ -131,7 +131,7 @@ export default function Header() {
                   href="https://www.instagram.com/zytonai/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Instagram de ZytonAI"
+                  aria-label="Instagram de Zyton CRM"
                   className="text-muted transition-colors hover:text-foreground"
                 >
                   <InstagramIcon className="h-5 w-5" />
@@ -140,7 +140,7 @@ export default function Header() {
                   href="https://www.linkedin.com/company/zyton-ai/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="LinkedIn de ZytonAI"
+                  aria-label="LinkedIn de Zyton CRM"
                   className="text-muted transition-colors hover:text-foreground"
                 >
                   <LinkedinIcon className="h-5 w-5" />

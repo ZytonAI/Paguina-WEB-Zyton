@@ -1,4 +1,4 @@
-// Configuración del puente hacia el CRM (el SaaS de ZytonAI).
+// Configuración del puente hacia el CRM (el SaaS de Zyton CRM).
 //
 // La web no sabe de empresas: manda usuario y contraseña a la API del CRM,
 // servidor a servidor, y la API decide a qué empresa pertenece esa persona y

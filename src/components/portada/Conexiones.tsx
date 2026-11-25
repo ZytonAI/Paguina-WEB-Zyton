@@ -32,7 +32,7 @@ export default function Conexiones() {
                 {/* El logo en el centro */}
                 <div className="absolute left-1/2 top-1/2 flex size-24 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-3xl bg-background shadow-[0_20px_50px_-20px_rgba(21,94,214,0.55)] ring-1 ring-border">
                   <span className="animate-ping-soft absolute inset-0 rounded-3xl bg-accent/20" />
-                  <Image src="/logo-mark.png" alt="ZytonAI" width={52} height={52} className="relative" />
+                  <Image src="/logo-mark.png" alt="Zyton CRM" width={52} height={52} className="relative" />
                 </div>
 
                 {/* El anillo que gira con los iconos */}

@@ -89,7 +89,7 @@ export default function Footer() {
         </div>
 
         <p className="mt-12 border-t border-border pt-6 text-sm text-muted">
-          © {new Date().getFullYear()} ZytonAI. Todos los derechos reservados.
+          © {new Date().getFullYear()} Zyton CRM. Todos los derechos reservados.
         </p>
       </div>
     </footer>

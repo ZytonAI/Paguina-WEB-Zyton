@@ -6,7 +6,7 @@ import ContactForm from "@/components/ContactForm";
 export const metadata: Metadata = {
   title: "Contacto",
   description:
-    "Cuéntanos cómo funciona tu negocio y te mostramos cómo el CRM de ZytonAI se adapta a tu operación.",
+    "Cuéntanos cómo funciona tu negocio y te mostramos cómo Zyton CRM se adapta a tu operación.",
   alternates: {
     canonical: "/contacto",
   },

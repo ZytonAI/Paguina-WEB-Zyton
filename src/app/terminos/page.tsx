@@ -6,7 +6,7 @@ import { legalEntity } from "@/lib/legal";
 export const metadata: Metadata = {
   title: "Términos y condiciones",
   description:
-    "Términos y condiciones de uso de la plataforma ZytonAI: cuenta y usuarios, planes y pago, uso aceptable, datos, integraciones y responsabilidad.",
+    "Términos y condiciones de uso de la plataforma Zyton CRM: cuenta y usuarios, planes y pago, uso aceptable, datos, integraciones y responsabilidad.",
   alternates: {
     canonical: "/terminos",
   },
@@ -21,11 +21,11 @@ export default function TerminosPage() {
       <p>
         <strong>{legalEntity.razonSocial}</strong>, NIT {legalEntity.nit}, con
         domicilio en {legalEntity.direccion}, {legalEntity.ciudad}, Colombia, en
-        adelante «ZytonAI». Contacto:{" "}
+        adelante «Zyton CRM». Contacto:{" "}
         <a href={`mailto:${legalEntity.email}`}>{legalEntity.email}</a>.
       </p>
       <p>
-        Estos términos regulan el uso de la plataforma ZytonAI, un software de
+        Estos términos regulan el uso de la plataforma Zyton CRM, un software de
         gestión de clientes (CRM) que se ofrece como servicio por suscripción a
         empresas y profesionales. Al registrar una empresa o usar la
         plataforma, se aceptan estos términos.
@@ -33,7 +33,7 @@ export default function TerminosPage() {
 
       <h2>1. El servicio</h2>
       <p>
-        ZytonAI pone a disposición de cada empresa un espacio propio, accesible
+        Zyton CRM pone a disposición de cada empresa un espacio propio, accesible
         por su subdominio, para gestionar clientes, cobros, agenda, programas de
         fidelización, automatizaciones y comunicación por WhatsApp e Instagram,
         además de integraciones opcionales con Google Calendar y Meta Ads. Las
@@ -51,7 +51,7 @@ export default function TerminosPage() {
           Cada persona es responsable de la confidencialidad de su contraseña.
         </li>
         <li>
-          La información entregada al registrarse debe ser veraz. ZytonAI puede
+          La información entregada al registrarse debe ser veraz. Zyton CRM puede
           suspender cuentas creadas con datos falsos.
         </li>
       </ul>
@@ -70,7 +70,7 @@ export default function TerminosPage() {
           periodos parciales.
         </li>
         <li>
-          Ante falta de pago, ZytonAI puede suspender el acceso tras avisar.
+          Ante falta de pago, Zyton CRM puede suspender el acceso tras avisar.
           Los datos se conservan según la{" "}
           <Link href="/privacidad">política de privacidad</Link>.
         </li>
@@ -96,7 +96,7 @@ export default function TerminosPage() {
 
       <h2>5. Datos de la empresa</h2>
       <p>
-        Los datos que cada empresa carga son suyos. ZytonAI los trata
+        Los datos que cada empresa carga son suyos. Zyton CRM los trata
         únicamente para prestar el servicio, como Encargado del tratamiento,
         según la <Link href="/privacidad">política de privacidad</Link>. La
         empresa es la Responsable ante sus clientes y garantiza que cuenta con
@@ -107,7 +107,7 @@ export default function TerminosPage() {
       <h2>6. Integraciones de terceros</h2>
       <p>
         Las conexiones con Google, Meta y Wompi se hacen con las credenciales
-        y bajo los términos de cada uno de esos servicios. ZytonAI no responde por cambios, interrupciones, costos o
+        y bajo los términos de cada uno de esos servicios. Zyton CRM no responde por cambios, interrupciones, costos o
         decisiones de esos terceros (por ejemplo, el rechazo de una plantilla
         de WhatsApp o la suspensión de una cuenta publicitaria).
       </p>
@@ -118,7 +118,7 @@ export default function TerminosPage() {
         sin validez fiscal, y así lo indican en el propio documento.
       </p>
       <p>
-        <strong>ZytonAI no emite facturas electrónicas ante la DIAN</strong> ni
+        <strong>Zyton CRM no emite facturas electrónicas ante la DIAN</strong> ni
         actúa como proveedor tecnológico de facturación. La empresa sigue
         emitiendo sus facturas por los medios que ya utiliza, y es la única
         responsable de cumplir con sus obligaciones fiscales.
@@ -126,7 +126,7 @@ export default function TerminosPage() {
 
       <h2>8. Disponibilidad y soporte</h2>
       <p>
-        ZytonAI procura mantener el servicio disponible de forma continua, pero
+        Zyton CRM procura mantener el servicio disponible de forma continua, pero
         puede haber interrupciones por mantenimiento, fallos de proveedores de
         infraestructura o causas de fuerza mayor. Se avisará con antelación de
         los mantenimientos programados. El soporte se atiende por correo en{" "}
@@ -135,7 +135,7 @@ export default function TerminosPage() {
 
       <h2>9. Propiedad intelectual</h2>
       <p>
-        La plataforma, su código, diseño y marca son de ZytonAI. La suscripción
+        La plataforma, su código, diseño y marca son de Zyton CRM. La suscripción
         otorga una licencia de uso no exclusiva e intransferible mientras dure
         el servicio. Los logos y datos que la empresa carga siguen siendo
         suyos.
@@ -143,17 +143,17 @@ export default function TerminosPage() {
 
       <h2>10. Limitación de responsabilidad</h2>
       <p>
-        ZytonAI responde por la prestación diligente del servicio. No responde
+        Zyton CRM responde por la prestación diligente del servicio. No responde
         por lucro cesante ni por daños indirectos derivados del uso de la
         plataforma, ni por decisiones comerciales que la empresa tome con base
         en la información que gestiona en ella. En todo caso, la
-        responsabilidad total de ZytonAI se limita al valor pagado por la
+        responsabilidad total de Zyton CRM se limita al valor pagado por la
         empresa en los últimos doce meses.
       </p>
 
       <h2>11. Terminación</h2>
       <p>
-        ZytonAI puede terminar el servicio a una empresa que incumpla estos
+        Zyton CRM puede terminar el servicio a una empresa que incumpla estos
         términos, previo aviso salvo en casos graves (fraude, ataques, uso
         ilícito). La empresa puede terminar cuando quiera desde su cuenta o
         escribiendo a soporte.
@@ -168,7 +168,7 @@ export default function TerminosPage() {
 
       <h2>13. Cambios</h2>
       <p>
-        ZytonAI puede modificar estos términos. Los cambios se publicarán en{" "}
+        Zyton CRM puede modificar estos términos. Los cambios se publicarán en{" "}
         <a href="https://zytonai.com/terminos">https://zytonai.com/terminos</a>{" "}
         y se comunicarán por correo con al menos quince días de antelación
         cuando sean sustanciales. Seguir usando el servicio después de esa

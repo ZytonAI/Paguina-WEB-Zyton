@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 const siteUrl = "https://www.zytonai.com";
-const title = "ZytonAI | CRM que unifica y potencia tu negocio";
+const title = "Zyton CRM | El CRM que unifica y potencia tu negocio";
 const description =
   "CRM que reúne toda la información de tu negocio en un solo lugar y se adapta a cómo ya trabajas. Con tu marca, plantillas por sector, mensajes automáticos y un asistente con IA para WhatsApp e Instagram.";
 
@@ -24,10 +24,10 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: title,
-    template: "%s | ZytonAI",
+    template: "%s | Zyton CRM",
   },
   description,
-  applicationName: "ZytonAI",
+  applicationName: "Zyton CRM",
   keywords: [
     "CRM personalizado",
     "CRM para agencias de seguros",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     "unificación de canales de comunicación",
     "recordatorio de vencimiento de pólizas",
   ],
-  authors: [{ name: "ZytonAI" }],
+  authors: [{ name: "Zyton CRM" }],
   alternates: {
     canonical: "/",
   },
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "es_CO",
     url: siteUrl,
-    siteName: "ZytonAI",
+    siteName: "Zyton CRM",
     title,
     description,
     images: [
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "ZytonAI — Unifica y potencia tu negocio",
+        alt: "Zyton CRM — Unifica y potencia tu negocio",
       },
     ],
   },
@@ -86,7 +86,7 @@ export const viewport: Viewport = {
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  name: "ZytonAI",
+  name: "Zyton CRM",
   url: siteUrl,
   logo: `${siteUrl}/logo.png`,
   image: `${siteUrl}/og-image.png`,

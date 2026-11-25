@@ -68,11 +68,11 @@ export default async function BlogPostPage({
     datePublished: post.date,
     author: {
       "@type": "Organization",
-      name: "ZytonAI",
+      name: "Zyton CRM",
     },
     publisher: {
       "@type": "Organization",
-      name: "ZytonAI",
+      name: "Zyton CRM",
       logo: `${siteUrl}/logo.png`,
     },
     mainEntityOfPage: `${siteUrl}/blog/${post.slug}`,

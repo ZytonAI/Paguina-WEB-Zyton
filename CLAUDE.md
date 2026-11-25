@@ -4,7 +4,7 @@ Guía para Claude Code al trabajar en este repositorio.
 
 ## Proyecto
 
-Página web de marketing de ZytonAI (`www.zytonai.com`): inicio, precios,
+Página web de marketing de Zyton CRM (`www.zytonai.com`): inicio, precios,
 blog, FAQ, contacto, páginas legales y el botón «Ingresar a CRM», que lleva a
 cada usuario al CRM de su empresa en el SaaS (`<empresa>.zytonai.com`).
 

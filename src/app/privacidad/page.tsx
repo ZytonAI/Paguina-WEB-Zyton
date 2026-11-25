@@ -6,7 +6,7 @@ import { legalEntity } from "@/lib/legal";
 export const metadata: Metadata = {
   title: "Política de privacidad",
   description:
-    "Cómo ZytonAI recoge, usa, guarda y protege los datos personales en su plataforma CRM, conforme a la Ley 1581 de 2012 y el Decreto 1377 de 2013.",
+    "Cómo Zyton CRM recoge, usa, guarda y protege los datos personales en su plataforma CRM, conforme a la Ley 1581 de 2012 y el Decreto 1377 de 2013.",
   alternates: {
     canonical: "/privacidad",
   },
@@ -21,11 +21,11 @@ export default function PrivacidadPage() {
       <p>
         <strong>{legalEntity.razonSocial}</strong>, NIT {legalEntity.nit}, con
         domicilio en {legalEntity.direccion}, {legalEntity.ciudad}, Colombia, en
-        adelante «ZytonAI». Contacto:{" "}
+        adelante «Zyton CRM». Contacto:{" "}
         <a href={`mailto:${legalEntity.email}`}>{legalEntity.email}</a>.
       </p>
       <p>
-        Esta política describe cómo ZytonAI recoge, usa, guarda y protege los
+        Esta política describe cómo Zyton CRM recoge, usa, guarda y protege los
         datos personales en su plataforma de gestión de clientes (CRM)
         disponible en{" "}
         <a href="https://zytonai.com">https://zytonai.com</a> y sus subdominios,
@@ -36,7 +36,7 @@ export default function PrivacidadPage() {
       <h2>1. Dos tipos de datos, dos roles</h2>
       <p>
         <strong>Datos de las empresas usuarias y sus empleados.</strong> Cuando
-        una empresa se registra y crea cuentas para su equipo, ZytonAI actúa
+        una empresa se registra y crea cuentas para su equipo, Zyton CRM actúa
         como <em>Responsable del tratamiento</em>: nombre, correo, usuario, rol,
         datos de facturación del servicio y registros de uso.
       </p>
@@ -44,7 +44,7 @@ export default function PrivacidadPage() {
         <strong>Datos de los clientes de cada empresa.</strong> La información
         que cada empresa carga en su CRM (sus clientes, cobros, citas,
         conversaciones, leads) pertenece a esa empresa, que es la{" "}
-        <em>Responsable</em> ante sus propios clientes. ZytonAI actúa como{" "}
+        <em>Responsable</em> ante sus propios clientes. Zyton CRM actúa como{" "}
         <em>Encargado del tratamiento</em>: los guarda y procesa por cuenta de
         la empresa, siguiendo sus instrucciones, y no los usa para fines propios
         ni los comparte con terceros salvo lo descrito aquí. Cada empresa es
@@ -76,7 +76,7 @@ export default function PrivacidadPage() {
         </li>
       </ul>
       <p>
-        ZytonAI no solicita datos sensibles. Si una empresa decide guardarlos en
+        Zyton CRM no solicita datos sensibles. Si una empresa decide guardarlos en
         casillas propias (por ejemplo, información de salud en una clínica), es
         responsable de contar con la autorización expresa que la ley exige.
       </p>
@@ -98,19 +98,19 @@ export default function PrivacidadPage() {
         </li>
       </ul>
       <p>
-        ZytonAI no vende datos personales ni los usa para publicidad propia.
+        Zyton CRM no vende datos personales ni los usa para publicidad propia.
       </p>
 
       <h2>4. Servicios de terceros conectados</h2>
       <p>
-        Cada empresa decide qué servicios conecta. Al hacerlo, ZytonAI
+        Cada empresa decide qué servicios conecta. Al hacerlo, Zyton CRM
         intercambia con ellos solo lo necesario para la función
         correspondiente:
       </p>
       <ul>
         <li>
           <strong>Google Calendar.</strong> Si una persona conecta su cuenta de
-          Google, ZytonAI crea, actualiza y cancela en el calendario que esa
+          Google, Zyton CRM crea, actualiza y cancela en el calendario que esa
           persona elija los eventos de las citas agendadas en el CRM (con
           invitados, enlace de Google Meet y recordatorios). También lee los
           eventos de ese mismo calendario para mostrarlos en la agenda del CRM y
@@ -138,32 +138,32 @@ export default function PrivacidadPage() {
         </li>
         <li>
           <strong>Inteligencia artificial (OpenAI y Anthropic).</strong> Si la
-          empresa activa el asistente virtual, ZytonAI envía a OpenAI o a
+          empresa activa el asistente virtual, Zyton CRM envía a OpenAI o a
           Anthropic, a través de sus API comerciales, lo necesario para
           redactar cada respuesta: la conversación en curso, las instrucciones
           del asistente y el catálogo de la empresa. Las notas de voz se
           transcriben con OpenAI. De Google Calendar el asistente solo recibe la
           lista de horas libres de un día, nunca títulos, descripciones,
           invitados ni correos de los eventos. Estos proveedores no usan los
-          datos recibidos por su API para entrenar sus modelos, y ZytonAI tiene
+          datos recibidos por su API para entrenar sus modelos, y Zyton CRM tiene
           desactivada cualquier opción de compartir datos con ellos con ese
-          fin. ZytonAI no entrena modelos propios con datos de sus usuarios ni
+          fin. Zyton CRM no entrena modelos propios con datos de sus usuarios ni
           de sus clientes.
         </li>
         <li>
           <strong>Meta (WhatsApp Business, Instagram, Facebook).</strong> Si la
-          empresa conecta su cuenta, ZytonAI recibe y envía mensajes por su
+          empresa conecta su cuenta, Zyton CRM recibe y envía mensajes por su
           cuenta, recibe los datos de los formularios de sus anuncios (Lead
           Ads) y lee las cifras de rendimiento de sus campañas publicitarias.
           No publica contenido ni modifica anuncios.
         </li>
         <li>
-          <strong>Wompi</strong> procesa los pagos de la suscripción. ZytonAI no
+          <strong>Wompi</strong> procesa los pagos de la suscripción. Zyton CRM no
           guarda datos de tarjetas.
         </li>
         <li>
           <strong>Infraestructura:</strong> los datos se alojan en Supabase
-          (base de datos y archivos) y servidores administrados por ZytonAI,
+          (base de datos y archivos) y servidores administrados por Zyton CRM,
           con acceso restringido.
         </li>
       </ul>
@@ -174,7 +174,7 @@ export default function PrivacidadPage() {
         terceros (tokens de Google y Meta) se guardan cifradas y nunca se
         muestran de nuevo. Cada empresa solo puede
         ver sus propios datos, con controles en la base de datos y en la
-        aplicación. El acceso del equipo de ZytonAI se limita a soporte y
+        aplicación. El acceso del equipo de Zyton CRM se limita a soporte y
         operación.
       </p>
 
@@ -201,7 +201,7 @@ export default function PrivacidadPage() {
         <a href={`mailto:${legalEntity.email}`}>{legalEntity.email}</a> dentro
         de los plazos legales (consultas: diez días hábiles; reclamos: quince
         días hábiles). Si los datos pertenecen al CRM de una empresa usuaria,
-        ZytonAI trasladará la solicitud a esa empresa o la atenderá según sus
+        Zyton CRM trasladará la solicitud a esa empresa o la atenderá según sus
         instrucciones.
       </p>
 

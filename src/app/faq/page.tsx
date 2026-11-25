@@ -8,7 +8,7 @@ import GlowBackground from "@/components/GlowBackground";
 export const metadata: Metadata = {
   title: "Preguntas frecuentes",
   description:
-    "Respuestas a las dudas más comunes sobre el CRM de ZytonAI: sectores, conexiones, el asistente con IA, facturación, tiempos de puesta en marcha y reportes.",
+    "Respuestas a las dudas más comunes sobre Zyton CRM: sectores, conexiones, el asistente con IA, facturación, tiempos de puesta en marcha y reportes.",
   alternates: {
     canonical: "/faq",
   },

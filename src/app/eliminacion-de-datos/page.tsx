@@ -5,7 +5,7 @@ import { legalEntity } from "@/lib/legal";
 export const metadata: Metadata = {
   title: "Eliminación de datos",
   description:
-    "Pasos para solicitar a ZytonAI la eliminación de tus datos personales, seas empresa usuaria, cliente de una empresa o hayas conectado tu cuenta de Facebook, Instagram o Google.",
+    "Pasos para solicitar a Zyton CRM la eliminación de tus datos personales, seas empresa usuaria, cliente de una empresa o hayas conectado tu cuenta de Facebook, Instagram o Google.",
   alternates: {
     canonical: "/eliminacion-de-datos",
   },
@@ -22,11 +22,11 @@ export default function EliminacionDeDatosPage() {
       title="Cómo pedir la eliminación de tus datos"
     >
       <p>
-        Cualquier persona puede pedir que ZytonAI elimine los datos personales
+        Cualquier persona puede pedir que Zyton CRM elimine los datos personales
         que tenga sobre ella. Esta página explica cómo, según el caso.
       </p>
 
-      <h2>Si eres una empresa usuaria de ZytonAI</h2>
+      <h2>Si eres una empresa usuaria de Zyton CRM</h2>
       <ol>
         <li>
           Desconecta las integraciones que tengas activas (Google, Meta) desde
@@ -48,7 +48,7 @@ export default function EliminacionDeDatosPage() {
         </li>
       </ol>
 
-      <h2>Si eres cliente de una empresa que usa ZytonAI</h2>
+      <h2>Si eres cliente de una empresa que usa Zyton CRM</h2>
       <p>
         Los datos que una empresa guarda sobre sus clientes en su CRM son de
         esa empresa, que es la responsable ante ti. Pídele directamente a ella
@@ -60,7 +60,7 @@ export default function EliminacionDeDatosPage() {
 
       <h2>Si conectaste tu cuenta de Facebook, Instagram o Google</h2>
       <p>
-        Al quitar la aplicación ZytonAI desde la configuración de tu cuenta de
+        Al quitar la aplicación Zyton CRM desde la configuración de tu cuenta de
         Facebook (Configuración → Apps y sitios web) o de Google (Seguridad →
         Aplicaciones de terceros), los permisos quedan revocados de inmediato.
         Si además quieres que borremos los datos que ya recibimos a través de

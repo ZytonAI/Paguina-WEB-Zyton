@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "ZytonAI",
-    short_name: "ZytonAI",
+    name: "Zyton CRM",
+    short_name: "Zyton CRM",
     description:
       "Agencia de automatización con inteligencia artificial en Colombia.",
     start_url: "/",

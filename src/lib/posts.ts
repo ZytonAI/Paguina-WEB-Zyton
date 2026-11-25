@@ -64,7 +64,7 @@ export const posts: BlogPost[] = [
       },
       {
         type: "p",
-        text: "En ZytonAI diseñamos este tipo de seguimiento automático para que se integre a las herramientas que ya usas, sin cambiar tus procesos ni tu CRM. La idea no es automatizar por automatizar, sino asegurarte de que ningún lead se enfríe por falta de respuesta a tiempo.",
+        text: "En Zyton CRM diseñamos este tipo de seguimiento automático para que se integre a las herramientas que ya usas, sin cambiar tus procesos ni tu CRM. La idea no es automatizar por automatizar, sino asegurarte de que ningún lead se enfríe por falta de respuesta a tiempo.",
       },
     ],
   },
@@ -86,7 +86,7 @@ export const posts: BlogPost[] = [
       },
       {
         type: "p",
-        text: "En ZytonAI el seguimiento se monta sobre lo que ya tienes: tu número de WhatsApp Business, tu Instagram, los formularios de tu web y tus anuncios de Meta. Los clientes que llevas en Excel se suben tal como están, y la IA trabaja sobre ese flujo en lugar de reemplazarlo.",
+        text: "En Zyton CRM el seguimiento se monta sobre lo que ya tienes: tu número de WhatsApp Business, tu Instagram, los formularios de tu web y tus anuncios de Meta. Los clientes que llevas en Excel se suben tal como están, y la IA trabaja sobre ese flujo en lugar de reemplazarlo.",
       },
       {
         type: "list",

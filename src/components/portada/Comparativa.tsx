@@ -77,7 +77,7 @@ export default function Comparativa() {
                 ))}
                 <div className="flex flex-col items-center gap-1.5 rounded-t-2xl bg-accent-strong p-4 text-center text-sm font-semibold text-white">
                   <Image src="/logo-mark.png" alt="" width={26} height={26} className="brightness-0 invert" />
-                  ZytonAI
+                  Zyton CRM
                 </div>
               </div>
 

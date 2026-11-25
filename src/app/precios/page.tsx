@@ -9,7 +9,7 @@ import PlanesPrecios from "@/components/PlanesPrecios";
 export const metadata: Metadata = {
   title: "Precios",
   description:
-    "Planes del CRM de ZytonAI: plan Base desde $300.000 COP al mes, plan Pro con bandeja unificada de WhatsApp e Instagram, respuestas automatizadas y captación desde Meta Ads, y desarrollo a medida para grandes empresas.",
+    "Planes de Zyton CRM: plan Base desde $300.000 COP al mes, plan Pro con bandeja unificada de WhatsApp e Instagram, respuestas automatizadas y captación desde Meta Ads, y desarrollo a medida para grandes empresas.",
   alternates: {
     canonical: "/precios",
   },

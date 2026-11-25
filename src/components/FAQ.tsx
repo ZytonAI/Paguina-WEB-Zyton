@@ -2,7 +2,7 @@ import Reveal from "./Reveal";
 
 const faqs = [
   {
-    question: "¿Qué es ZytonAI?",
+    question: "¿Qué es Zyton CRM?",
     answer:
       "Es un CRM que unifica la información de tu negocio en un solo lugar: clientes, pagos, citas, documentos y conversaciones. Arranca con la plantilla de tu sector, se ajusta a cómo ya trabajas y, en el plan A medida, desarrollamos lo que tu proceso necesite dentro del mismo sistema.",
   },
@@ -36,10 +36,10 @@ const faqs = [
       "El plan Pro incluye 6.000 respuestas al mes, que alcanzan para el día a día de la mayoría de negocios. El CRM te avisa cuando vas por el 80 %, y si te hacen falta compras un paquete de 1.000 ($20.000) o de 3.000 ($50.000) respuestas extra, válido para ese mes. Si llegas al tope sin comprar más, el asistente deja de contestar y los mensajes le llegan a tu equipo como siempre.",
   },
   {
-    // Se dice en la venta, y no cuando el cliente lo descubre: ZytonAI no es
+    // Se dice en la venta, y no cuando el cliente lo descubre: Zyton CRM no es
     // un proveedor tecnológico de la DIAN y el recibo del CRM no tiene
     // validez fiscal. Prometerlo a medias sería peor que no ofrecerlo.
-    question: "¿ZytonAI emite facturas electrónicas ante la DIAN?",
+    question: "¿Zyton CRM emite facturas electrónicas ante la DIAN?",
     answer:
       "No. El CRM genera un comprobante de venta con tu marca y consecutivo propio, que sirve como constancia para el cliente y como control interno, pero no tiene validez fiscal. La factura electrónica la sigues emitiendo con tu facturador o tu contador, y para que eso no sea trabajo doble el CRM te exporta las ventas del mes en un archivo listo para cargar.",
   },
